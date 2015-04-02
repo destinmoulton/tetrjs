@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title></title>
+
+	<link rel="stylesheet" type="text/css" href="tetris.css">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+	<script src="mustache.js"></script>
+	<script src="tetris.blocks.js"></script>
+	<script src="tetris.jquery.js"></script>
+	<!--[if IE]>
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+
+</head>
+
+<body >
+<div id='tetris-container'>
+	<div id='tetris-board'></div>
+	<div id='tetris-next-piece-preview-container'></div>
+	<div id='tetris-score-container'></div>
+	<div id='tetris-level-container'></div>
+	<div id='tetris-actions-container'>
+		<a href="javascript:void(0);" onclick="tetris.pauseGame()">Pause</a>
+		<a href="javascript:void(0);" onclick="tetris.newGame()">New Game</a>
+	</div>
+	<div id='tetris-message'></div>
+</div>
+</body>
+<script id='tmpl-paused' type='text/template'>
+	Paused...
+	<br/>
+	<br/><a href="javascript:void(0);" onclick="tetris.startPlay()">Play!</a>
+</script>
+<script id='tmpl-gameover' type='text/template'>
+	Game Over!
+	<br/>
+	<br/><a href="javascript:void(0);" onclick="tetris.newGame()">New Game</a>
+</script>
+</html>
