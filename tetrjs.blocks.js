@@ -1,14 +1,28 @@
 /*
- * tetris.blocks.js
- *
  * Defines the various block types and their
  * possible positions.
  *
- * 'trans_row' property is the 
+ * @author Destin Moulton
+ * @version 0.6
+ * @license MIT
+ *
+ *
+ * The BLOCKS object is keyed to the block names defined in BLOCK_TYPES.
+ *
+ * Each BLOCK is composed of:
+ * 'class': The css class for the active blocks.
+ * 'no_positions': The number of possible positions for a block.
+ * 'positions': Object to store the different block positions
+ *    'trans_row': the row where the block is "rotated" for a position
+ *    'trans_col': the col where the block is "rotated" for a position
+ *    'rows': the rows that form the block.
+ *            - Each row is an object in {column:boolean, ...} format
+ *              i.e. Straight blocks in the 1st (0th) position are
+ *                   active in all 4 columns: {0:1, 1:1, 2:1, 3:1}
  *
  */
 
-var BLOCKS = {};
+
 var BLOCK_TYPES = [
 	'STRAIGHT',
 	'L_LEFT',
@@ -18,6 +32,8 @@ var BLOCK_TYPES = [
 	'Z',
 	'T'
 ];
+
+var BLOCKS = {};
 BLOCKS['STRAIGHT'] = {
 	'class':'tetris-block-straight',
 	'no_positions':2,
