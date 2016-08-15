@@ -11,6 +11,9 @@ Tetrjs should work in most modern browsers. I have not tested Internet Explorer,
 * jQuery UI > 1.11.4
 * mustache.js
 
+#### HTML and Templates
+***
+index.html contains a basic set of HTML and mustache templates to get started.
 
 #### License
 ***
