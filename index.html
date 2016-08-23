@@ -29,25 +29,25 @@
 
     <body >
         <!-- The Game Container -->
-        <div id='tetris-container'>
-            <div id='tetris-board'></div>
-            <div id='tetris-next-piece-preview-container'></div>
-            <div id='tetris-score-container'></div>
-            <div id='tetris-level-container'></div>
-            <div id='tetris-actions-container'>
+        <div id='tetrjs-container'>
+            <div id='tetrjs-board'></div>
+            <div id='tetrjs-next-piece-preview-container'></div>
+            <div id='tetrjs-score-container'></div>
+            <div id='tetrjs-level-container'></div>
+            <div id='tetrjs-actions-container'>
                 <br/>
                 <button type="button"
                         class="btn btn-primary btn-xs"
-                        onclick="tetris.pauseGame()">Pause ('p')</button>
+                        onclick="tetrjs.pauseGame()">Pause ('p')</button>
                 <br/>
                 <br/>
                 <button type="button"
                         class="btn btn-primary btn-xs"
-                        onclick="tetris.newGame()">New Game</button>
+                        onclick="tetrjs.newGame()">New Game</button>
 
             </div>
-            <div id='tetris-modal-veil'></div>
-            <div id='tetris-modal'></div>
+            <div id='tetrjs-modal-veil'></div>
+            <div id='tetrjs-modal'></div>
         </div>
     </body>
 
@@ -59,16 +59,16 @@
         <br/><br/>
         <button type="button"
                 class="btn btn-primary btn-xs"
-                onclick="tetris.newGame()">Play!</button>
+                onclick="tetrjs.newGame()">Play!</button>
 
         <br/><br/>
         Arrow keys control the pieces.
         <br/>
-        &nbsp;<span class='glyphicon glyphicon-arrow-up tetris-arrow-updown'></span>
+        &nbsp;<span class='glyphicon glyphicon-arrow-up tetrjs-arrow-updown'></span>
         <br/>
-        <span class='glyphicon glyphicon-arrow-left tetris-arrow tetris-arrow-leftright'></span>
-        <span class='glyphicon glyphicon-arrow-down tetris-arrow tetris-arrow-updown'></span>
-        <span class='glyphicon glyphicon-arrow-right tetris-arrow tetris-arrow-leftright'></span>
+        <span class='glyphicon glyphicon-arrow-left tetrjs-arrow tetrjs-arrow-leftright'></span>
+        <span class='glyphicon glyphicon-arrow-down tetrjs-arrow tetrjs-arrow-updown'></span>
+        <span class='glyphicon glyphicon-arrow-right tetrjs-arrow tetrjs-arrow-leftright'></span>
     </script>
 
     <!-- Paused State Modal Mustache.js Template -->
@@ -78,7 +78,7 @@
         <br/>
         <button type="button"
                 class="btn btn-primary btn-xs"
-                onclick="tetris.startPlay()">Play!</button>
+                onclick="tetrjs.startPlay()">Play!</button>
         <br/>
         <br/>( or press 'p' )
     </script>
@@ -90,7 +90,7 @@
         <br/>
         <button type="button"
                 class="btn btn-primary btn-xs"
-                onclick="tetris.newGame()">New Game</button>
+                onclick="tetrjs.newGame()">New Game</button>
 
     </script>
 </html>
