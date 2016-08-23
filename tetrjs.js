@@ -12,7 +12,7 @@
  * Initializes the basic configuration values.
  * @return void
  */
-var Tetris = function(){
+var Tetrjs = function(){
 	this.board = {};
 	this.boardColumnsWide = 10;
 	this.boardRowsHigh = 18;
@@ -63,16 +63,16 @@ var Tetris = function(){
  *  
  * @return void
  */
-Tetris.prototype.setupBoard = function(){
-	var jTetrisBoard = $('#tetris-board');
+Tetrjs.prototype.setupBoard = function(){
+	var jTetrjsBoard = $('#tetrjs-board');
 
 	// Clear the board
-	jTetrisBoard.html("");
+	jTetrjsBoard.html("");
 	this.board = {};
 
 	// Set the board size
-	jTetrisBoard.width(this.boardColumnsWide*this.cellWidthPx);
-	jTetrisBoard.height(this.boardRowsHigh*this.cellHeightPx);
+	jTetrjsBoard.width(this.boardColumnsWide*this.cellWidthPx);
+	jTetrjsBoard.height(this.boardRowsHigh*this.cellHeightPx);
 	
 	for(i=1; i<=this.boardRowsHigh; i++){
 		this.board[i] = {};
@@ -84,8 +84,8 @@ Tetris.prototype.setupBoard = function(){
 			// Add the block to the board
 			var left_pos = (j-1)*this.cellWidthPx;
 			var tmp_pos = " style='left:"+left_pos+"px; top:"+top_pos+"px;' ";
-			var tmp_div = "<div class='tetris-board-block' id='tb_"+j+"_"+i+"' "+tmp_pos+"></div>"
-			jTetrisBoard.append(tmp_div);
+			var tmp_div = "<div class='tetrjs-board-block' id='tb_"+j+"_"+i+"' "+tmp_pos+"></div>"
+			jTetrjsBoard.append(tmp_div);
 		}
 	}
 }
@@ -98,8 +98,8 @@ Tetris.prototype.setupBoard = function(){
  *
  * @return void
  */
-Tetris.prototype.setupPreviewBoard = function(){
-	var jPreviewBoard = $('#tetris-next-piece-preview-container');
+Tetrjs.prototype.setupPreviewBoard = function(){
+	var jPreviewBoard = $('#tetrjs-next-piece-preview-container');
 	var preview_sections_wide = 6;
 	var preview_sections_high = 4;
 
@@ -114,7 +114,7 @@ Tetris.prototype.setupPreviewBoard = function(){
 		for(j=1; j<=preview_sections_wide; j++){
 			var left_pos = (j-1)*this.cellWidthPx;
 			var tmp_pos = " style='left:"+left_pos+"px; top:"+top_pos+"px;' ";
-			var tmp_div = "<div class='tetris-board-block' id='tp_"+j+"_"+i+"' "+tmp_pos+"></div>"
+			var tmp_div = "<div class='tetrjs-board-block' id='tp_"+j+"_"+i+"' "+tmp_pos+"></div>"
 			jPreviewBoard.append(tmp_div);
 		}
 	}
@@ -125,7 +125,7 @@ Tetris.prototype.setupPreviewBoard = function(){
  * 
  * @return string Block type 
  */
-Tetris.prototype.generateRandomBlockType = function(){
+Tetrjs.prototype.generateRandomBlockType = function(){
 	return BLOCK_TYPES[Math.floor(Math.random()*BLOCK_TYPES.length)];
 }
 
@@ -133,7 +133,7 @@ Tetris.prototype.generateRandomBlockType = function(){
  * Make the preview block in the preview board.
  *
  */
-Tetris.prototype.makePreviewBlock = function(){
+Tetrjs.prototype.makePreviewBlock = function(){
 	
 	//Remove the current block from the preview
 	var parent = this;
@@ -165,7 +165,7 @@ Tetris.prototype.makePreviewBlock = function(){
 	
 }
 
-Tetris.prototype.movePiece = function(desired_direction){
+Tetrjs.prototype.movePiece = function(desired_direction){
 
 	var curr_block_no_positions = BLOCKS[this.currentPiece.type]['no_positions'];
 	var curr_block_pos_trans_row = 0;
@@ -298,7 +298,7 @@ Tetris.prototype.movePiece = function(desired_direction){
 	}
 }
 
-Tetris.prototype.checkAndEliminateRows = function(){
+Tetrjs.prototype.checkAndEliminateRows = function(){
 	var no_rows_eliminated = 0;
 	//Loop over the board rows
 	var parent = this;
@@ -352,7 +352,7 @@ Tetris.prototype.checkAndEliminateRows = function(){
 	}
 }
 
-Tetris.prototype.score = function(no_rows_eliminated){
+Tetrjs.prototype.score = function(no_rows_eliminated){
 	
 	var multiple_row_bonus = 0;
 	var current_multiplier = this.currentGame.scoreMultiplier*this.currentGame.level;
@@ -381,15 +381,15 @@ Tetris.prototype.score = function(no_rows_eliminated){
 	}
 }
 
-Tetris.prototype.setScoreText = function(){
-	$("#tetris-score-container").text(this.currentGame.score);
+Tetrjs.prototype.setScoreText = function(){
+	$("#tetrjs-score-container").text(this.currentGame.score);
 }
 
-Tetris.prototype.setLevelText = function(){
-	$("#tetris-level-container").text("LEVEL "+this.currentGame.level);
+Tetrjs.prototype.setLevelText = function(){
+	$("#tetrjs-level-container").text("LEVEL "+this.currentGame.level);
 }
 
-Tetris.prototype.removeCurrentPieceFromBoard = function(){
+Tetrjs.prototype.removeCurrentPieceFromBoard = function(){
 
 	//Remove the current class from the visible blocks
 	var parent = this;
@@ -402,7 +402,7 @@ Tetris.prototype.removeCurrentPieceFromBoard = function(){
 	this.currentPiece.blockPositions = [];
 }
 
-Tetris.prototype.newPiece = function(){
+Tetrjs.prototype.newPiece = function(){
 	// Reset all the variables
 	this.currentPiece.blockIds = [];
 	this.currentPiece.blockPositions = [];
@@ -427,7 +427,7 @@ Tetris.prototype.newPiece = function(){
 	this.makePreviewBlock();
 }
 
-Tetris.prototype.setupKeyEvents = function(){
+Tetrjs.prototype.setupKeyEvents = function(){
 	var parent = this;
 	$(document).keydown(function(e) {
 		switch(e.which) {
@@ -464,7 +464,7 @@ Tetris.prototype.setupKeyEvents = function(){
 	});
 }
 
-Tetris.prototype.startPlay = function(){
+Tetrjs.prototype.startPlay = function(){
 
 	if(this.previewPiece.type==""){
 		//NEW GAME!
@@ -482,7 +482,7 @@ Tetris.prototype.startPlay = function(){
 	this.hideMessage();
 }
 
-Tetris.prototype.startGameInterval = function(){
+Tetrjs.prototype.startGameInterval = function(){
 	if(!this.gameIntervalTimer.obj){
 		var parent = this;
 		//Start the action (just move the current piece down)
@@ -492,12 +492,12 @@ Tetris.prototype.startGameInterval = function(){
 	}
 }
 
-Tetris.prototype.killGameInterval = function(){
+Tetrjs.prototype.killGameInterval = function(){
 	clearInterval(this.gameIntervalTimer.obj);
 	this.gameIntervalTimer.obj = false;
 }
 
-Tetris.prototype.pauseGame = function(){
+Tetrjs.prototype.pauseGame = function(){
     if(this.isPaused){
         //Already paused, so start the game
         this.startPlay();
@@ -509,13 +509,13 @@ Tetris.prototype.pauseGame = function(){
 	this.showMessage('tmpl-paused');
 }
 
-Tetris.prototype.gameOver = function(){
+Tetrjs.prototype.gameOver = function(){
 	this.killGameInterval();
 	this.showMessage('tmpl-gameover');
 }
 
 
-Tetris.prototype.newGame = function(){
+Tetrjs.prototype.newGame = function(){
 	this.killGameInterval();
 	
 	this.currentGame.score = 0;
@@ -539,7 +539,7 @@ Tetris.prototype.newGame = function(){
  * Show the introduction message;
  * should be run when game loads.
  **/
-Tetris.prototype.showIntro = function(){
+Tetrjs.prototype.showIntro = function(){
     console.log('running');
 	this.setupBoard();
 	this.setupPreviewBoard();
@@ -547,10 +547,10 @@ Tetris.prototype.showIntro = function(){
     this.showMessage('tmpl-intro');
 }
 
-Tetris.prototype.showMessage = function(template_name){
-	var jModal = $('#tetris-modal');
+Tetrjs.prototype.showMessage = function(template_name){
+	var jModal = $('#tetrjs-modal');
     
-    var jVeil = $('#tetris-modal-veil');
+    var jVeil = $('#tetrjs-modal-veil');
 	var html = Mustache.render($('#'+template_name).html());
 
 	jModal.html(html);
@@ -565,9 +565,9 @@ Tetris.prototype.showMessage = function(template_name){
 	
 }
 
-Tetris.prototype.hideMessage = function(){
-	var jModal = $('#tetris-modal');
-    var jVeil = $('#tetris-modal-veil');
+Tetrjs.prototype.hideMessage = function(){
+	var jModal = $('#tetrjs-modal');
+    var jVeil = $('#tetrjs-modal-veil');
     jModal.fadeOut(100, function(){
         jVeil.hide();
         //Clear after the fade
@@ -575,17 +575,17 @@ Tetris.prototype.hideMessage = function(){
     });
 }
 
-var tetris = new Tetris();
+var tetrjs = new Tetrjs();
 $(function(){
 	
 	/*
 	$(window).focusout(function(){
 		console.log("focusout event fired");
-		tetris.pauseGame();
+		tetrjs.pauseGame();
 	});
 	*/
 	
-	tetris.setupKeyEvents();
+	tetrjs.setupKeyEvents();
 
-	tetris.showIntro();
+	tetrjs.showIntro();
 });

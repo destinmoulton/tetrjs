@@ -4,23 +4,31 @@
     <head>
         <meta charset="utf-8">
         <title>Tetrjs Demo</title>
+        <!-- Bootstrap for Basic CSS -->
         <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+        <!-- Tetrjs CSS -->
         <link rel="stylesheet" type="text/css" href="tetrjs.css">
 
+        <!-- Required Javascript Libraries -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
         <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.2.1/mustache.min.js"></script>
+
+        <!-- The Tetrjs Block Definitions -->
         <script src="tetrjs.blocks.js"></script>
+        
+        <!-- The Tetrjs Game Logic -->
         <script src="tetrjs.js"></script>
+
         <!--[if IE]>
             <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
-
     </head>
 
     <body >
+        <!-- The Game Container -->
         <div id='tetris-container'>
             <div id='tetris-board'></div>
             <div id='tetris-next-piece-preview-container'></div>
@@ -41,13 +49,13 @@
             <div id='tetris-modal-veil'></div>
             <div id='tetris-modal'></div>
         </div>
-
     </body>
+
+    <!-- Intro Modal Mustache.js Template -->
     <script id='tmpl-intro' type='text/template'>
         Welcome to Tetrjs.
         <br/>That's no typo, Batman!
         <br/>Tetrjs is written in javascript.
-
         <br/><br/>
         <button type="button"
                 class="btn btn-primary btn-xs"
@@ -62,6 +70,8 @@
         <span class='glyphicon glyphicon-arrow-down tetris-arrow tetris-arrow-updown'></span>
         <span class='glyphicon glyphicon-arrow-right tetris-arrow tetris-arrow-leftright'></span>
     </script>
+
+    <!-- Paused State Modal Mustache.js Template -->
     <script id='tmpl-paused' type='text/template'>
         Paused...
         <br/>
@@ -72,6 +82,8 @@
         <br/>
         <br/>( or press 'p' )
     </script>
+
+    <!-- Game Over Modal Mustache.js Template -->
     <script id='tmpl-gameover' type='text/template'>
         Game Over!
         <br/>

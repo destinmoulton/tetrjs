@@ -35,7 +35,7 @@ var BLOCK_TYPES = [
 
 var BLOCKS = {};
 BLOCKS['STRAIGHT'] = {
-	'class':'tetris-block-straight',
+	'class':'tetrjs-block-straight',
 	'no_positions':2,
 	'positions':{
 		0: {
@@ -59,7 +59,7 @@ BLOCKS['STRAIGHT'] = {
 }
 
 BLOCKS['L_LEFT'] = {
-	'class':'tetris-block-l-left',
+	'class':'tetrjs-block-l-left',
 	'no_positions':4,
 	'positions':{
 		0: {
@@ -100,7 +100,7 @@ BLOCKS['L_LEFT'] = {
 }
 
 BLOCKS['L_RIGHT'] = {
-	'class':'tetris-block-l-right',	
+	'class':'tetrjs-block-l-right',	
 	'no_positions':4,
 	'positions':{
 		0: {
@@ -141,7 +141,7 @@ BLOCKS['L_RIGHT'] = {
 }
 
 BLOCKS['SQUARE'] = {
-	'class':'tetris-block-square',
+	'class':'tetrjs-block-square',
 	'no_positions':1,
 	'positions':{
 		0: {
@@ -157,7 +157,7 @@ BLOCKS['SQUARE'] = {
 }
 
 BLOCKS['S'] = {
-	'class':'tetris-block-s',
+	'class':'tetrjs-block-s',
 	'no_positions':2,
 	'positions':{
 		0: {
@@ -181,7 +181,7 @@ BLOCKS['S'] = {
 }
 
 BLOCKS['Z'] = {
-	'class':'tetris-block-z',
+	'class':'tetrjs-block-z',
 	'no_positions':2,
 	'positions':{
 		0: {
@@ -206,7 +206,7 @@ BLOCKS['Z'] = {
 }
 
 BLOCKS['T'] = {
-	'class':'tetris-block-t',
+	'class':'tetrjs-block-t',
 	'no_positions':4,
 	'positions':{
 		0: {
