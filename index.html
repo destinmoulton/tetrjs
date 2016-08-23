@@ -1,84 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="utf-8">
-	<title>Tetrjs Demo</title>
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="tetrjs.css">
+    <head>
+	    <meta charset="utf-8">
+	    <title>Tetrjs Demo</title>
+        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	    <link rel="stylesheet" type="text/css" href="tetrjs.css">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.2.1/mustache.min.js"></script>
-	<script src="tetrjs.blocks.js"></script>
-	<script src="tetrjs.js"></script>
-	<!--[if IE]>
-		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-	<![endif]-->
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.2.1/mustache.min.js"></script>
+	    <script src="tetrjs.blocks.js"></script>
+	    <script src="tetrjs.js"></script>
+	    <!--[if IE]>
+		    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	    <![endif]-->
 
-</head>
+    </head>
 
-<body >
-<div id='tetris-container'>
-	<div id='tetris-board'></div>
-	<div id='tetris-next-piece-preview-container'></div>
-	<div id='tetris-score-container'></div>
-	<div id='tetris-level-container'></div>
-	<div id='tetris-actions-container'>
-      <br/>
-      <button type="button"
-              class="btn btn-primary btn-xs"
-              onclick="tetris.pauseGame()">Pause ('p')</button>
-	  <br/>
-      <br/>
-      <button type="button"
-              class="btn btn-primary btn-xs"
-              onclick="tetris.newGame()">New Game</button>
+    <body >
+        <div id='tetris-container'>
+	        <div id='tetris-board'></div>
+	        <div id='tetris-next-piece-preview-container'></div>
+	        <div id='tetris-score-container'></div>
+	        <div id='tetris-level-container'></div>
+	        <div id='tetris-actions-container'>
+                <br/>
+                <button type="button"
+                        class="btn btn-primary btn-xs"
+                        onclick="tetris.pauseGame()">Pause ('p')</button>
+	            <br/>
+                <br/>
+                <button type="button"
+                        class="btn btn-primary btn-xs"
+                        onclick="tetris.newGame()">New Game</button>
 
-	</div>
-    <div id='tetris-modal-veil'></div>
-    <div id='tetris-modal'></div>
-</div>
+	        </div>
+            <div id='tetris-modal-veil'></div>
+            <div id='tetris-modal'></div>
+        </div>
 
-</body>
-<script id='tmpl-intro' type='text/template'>
-  Welcome to Tetrjs.
-  <br/>That's no typo, Batman!
-  <br/>Tetrjs is written in javascript.
+    </body>
+    <script id='tmpl-intro' type='text/template'>
+        Welcome to Tetrjs.
+        <br/>That's no typo, Batman!
+        <br/>Tetrjs is written in javascript.
 
-  <br/><br/>
-  <button type="button"
-          class="btn btn-primary btn-xs"
-          onclick="tetris.newGame()">Play!</button>
+        <br/><br/>
+        <button type="button"
+                class="btn btn-primary btn-xs"
+                onclick="tetris.newGame()">Play!</button>
 
-  <br/><br/>
-  Arrow keys control the pieces.
-  <br/>
-  &nbsp;<span class='glyphicon glyphicon-arrow-up tetris-arrow-updown'></span>
-  <br/>
-  <span class='glyphicon glyphicon-arrow-left tetris-arrow tetris-arrow-leftright'></span>
-  <span class='glyphicon glyphicon-arrow-down tetris-arrow tetris-arrow-updown'></span>
-  <span class='glyphicon glyphicon-arrow-right tetris-arrow tetris-arrow-leftright'></span>
-</script>
-<script id='tmpl-paused' type='text/template'>
-	Paused...
-	<br/>
-	<br/>
-    <button type="button"
-          class="btn btn-primary btn-xs"
-          onclick="tetris.startPlay()">Play!</button>
-    <br/>
-    <br/>( or press 'p' )
-</script>
-<script id='tmpl-gameover' type='text/template'>
-	Game Over!
-	<br/>
-	<br/>
-    <button type="button"
-          class="btn btn-primary btn-xs"
-          onclick="tetris.newGame()">New Game</button>
+        <br/><br/>
+        Arrow keys control the pieces.
+        <br/>
+        &nbsp;<span class='glyphicon glyphicon-arrow-up tetris-arrow-updown'></span>
+        <br/>
+        <span class='glyphicon glyphicon-arrow-left tetris-arrow tetris-arrow-leftright'></span>
+        <span class='glyphicon glyphicon-arrow-down tetris-arrow tetris-arrow-updown'></span>
+        <span class='glyphicon glyphicon-arrow-right tetris-arrow tetris-arrow-leftright'></span>
+    </script>
+    <script id='tmpl-paused' type='text/template'>
+	    Paused...
+	    <br/>
+	    <br/>
+        <button type="button"
+                class="btn btn-primary btn-xs"
+                onclick="tetris.startPlay()">Play!</button>
+        <br/>
+        <br/>( or press 'p' )
+    </script>
+    <script id='tmpl-gameover' type='text/template'>
+	    Game Over!
+	    <br/>
+	    <br/>
+        <button type="button"
+                class="btn btn-primary btn-xs"
+                onclick="tetris.newGame()">New Game</button>
 
-</script>
+    </script>
 </html>
