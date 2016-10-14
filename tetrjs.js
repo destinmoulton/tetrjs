@@ -1,5 +1,5 @@
 /**
- * A javascript implementation of Tetris.
+ * Tetrjs is a javascript implementation of Tetris.
  * 
  * @author Destin Moulton
  * @license MIT
@@ -14,22 +14,46 @@
  */
 var Tetrjs = function(){
 	this.board = {};
-	this.boardColumnsWide = 10;
-	this.boardRowsHigh = 18;
-	this.pieceStartColumn = 4;
-	this.cellWidthPx = 20;
-	this.cellHeightPx = 20;
+
+
     this.isPaused = false;
+
+    this.SETTINGS = {
+        BOARD_COLS_WIDE: 10,
+        BOARD_ROWS_HIGH: 18,
+        PIECE_START_COL: 4,
+        PIECE_START_ROW: 1,
+        PIECE_START_POS: 1,
+        GAME_INTERVAL_MS: 460,
+        GAME_SCORE_MULTIPLIER: 100,
+        CELL_WIDTH_PX: 20,
+        CELL_HEIGHT_PX: 20
+    }
+    
+    this.DOM_IDS = {
+        BOARD:'#tetrjs-board',
+        PREVIEW_CONTAINER:'#tetrjs-next-piece-preview-container',
+        SCORE_CONTAINER:"#tetrjs-score-container",
+        LEVEL_CONTAINER:"#tetrjs-level-container",
+        MODAL:'#tetrjs-modal',
+        MODAL_VEIL:'#tetrjs-modal-veil'
+    };
+
+    this.DOM_CLASSES = {
+        BOARD_BLOCK:'tetrjs-board-block'
+    }
+
 
 	this.currentBlock = {
 		'type':'',
 		'blockIds':[],
 		'blockPositions':[],
 		'class':'',
-		'row':1,
-		'col':this.pieceStartColumn,
-		'position':1
+		'row':this.SETTINGS.PIECE_START_ROW,
+		'col':this.SETTINGS.PIECE_START_COL,
+		'position':this.SETTINGS.PIECE_START_POS
 	};
+    
 
 	this.previewPiece = {
 		'type':'',
@@ -39,15 +63,15 @@ var Tetrjs = function(){
 		
 	this.gameIntervalTimer = {
 		'obj': false,
-		'ms': 400
+		'ms': this.SETTINGS.GAME_INTERVAL_MS
 	};
 
 	this.currentGame = {
 		'score':0,
-		'scoreMultiplier':100,
 		'rowsEliminated':0,
 		'level':1
 	};
+
 
 }
 
@@ -55,37 +79,39 @@ var Tetrjs = function(){
  * Setup the Tetrjs board.
  *  1. Clear the board
  *     i. Remove any existing HTML
- *     ii. Clear the multidimensional board object
+ *     ii. Clear the multidimensional/matrix board object
  *  2. Set the board width and height (in px) 
  *  3. Create the new, clean, board
- *     i. Instantiate the multidimensional board container
+ *     i. Instantiate the multidimensional/matrix board container
  *     ii. Create div boxes at absolute position to hold blocks
  *  
  * @return void
  */
 Tetrjs.prototype.setupBoard = function(){
-	var jTetrjsBoard = $('#tetrjs-board');
+    var $tetrjsBoard = $(this.DOM_IDS.BOARD); 
 
 	// Clear the board
-	jTetrjsBoard.html("");
+	$tetrjsBoard.html("");
 	this.board = {};
 
 	// Set the board size
-	jTetrjsBoard.width(this.boardColumnsWide*this.cellWidthPx);
-	jTetrjsBoard.height(this.boardRowsHigh*this.cellHeightPx);
+	$tetrjsBoard.width(this.SETTINGS.BOARD_COLS_WIDE * this.SETTINGS.CELL_WIDTH_PX);
+	$tetrjsBoard.height(this.SETTINGS.BOARD_ROWS_HIGH * this.SETTINGS.CELL_HEIGHT_PX);
 	
-	for(i=1; i<=this.boardRowsHigh; i++){
+	for(i=1; i<=this.SETTINGS.BOARD_ROWS_HIGH; i++){
 		this.board[i] = {};
-		var top_pos = (i-1)*this.cellHeightPx;
-		for(j=1; j<=this.boardColumnsWide; j++){
+		var top_pos = (i-1)*this.SETTINGS.CELL_HEIGHT_PX;
+		for(j=1; j<=this.SETTINGS.BOARD_COLS_WIDE; j++){
 			// Setup the object for storing block positions
 			this.board[i][j] = {};
 
-			// Add the block to the board
-			var left_pos = (j-1)*this.cellWidthPx;
+			// Calculate left px position of the cell
+			var left_pos = (j-1) * this.SETTINGS.CELL_WIDTH_PX;
+
+            // Add the block to the board
 			var tmp_pos = " style='left:"+left_pos+"px; top:"+top_pos+"px;' ";
-			var tmp_div = "<div class='tetrjs-board-block' id='tb_"+j+"_"+i+"' "+tmp_pos+"></div>"
-			jTetrjsBoard.append(tmp_div);
+			var tmp_div = "<div class='"+this.DOM_CLASSES.BOARD_BLOCK+"' id='tb_"+j+"_"+i+"' "+tmp_pos+"></div>"
+			$tetrjsBoard.append(tmp_div);
 		}
 	}
 }
@@ -99,23 +125,23 @@ Tetrjs.prototype.setupBoard = function(){
  * @return void
  */
 Tetrjs.prototype.setupPreviewBoard = function(){
-	var jPreviewBoard = $('#tetrjs-next-piece-preview-container');
+	var $previewBoard = $(this.DOM_IDS.PREVIEW_CONTAINER);
 	var preview_sections_wide = 6;
 	var preview_sections_high = 4;
 
 	// Clear the board
-	jPreviewBoard.html("");
+	$previewBoard.html("");
 	
-	jPreviewBoard.width(preview_sections_wide*this.cellWidthPx);
-	jPreviewBoard.height(preview_sections_high*this.cellHeightPx);
+	$previewBoard.width(preview_sections_wide * this.SETTINGS.CELL_WIDTH_PX);
+	$previewBoard.height(preview_sections_high * this.SETTINGS.CELL_HEIGHT_PX);
 
 	for(i=1; i<=preview_sections_high; i++){
-		var top_pos = (i-1)*this.cellHeightPx;
+		var top_pos = (i-1)*this.SETTINGS.CELL_HEIGHT_PX;
 		for(j=1; j<=preview_sections_wide; j++){
-			var left_pos = (j-1)*this.cellWidthPx;
+			var left_pos = (j-1)*this.SETTINGS.CELL_WIDTH_PX;
 			var tmp_pos = " style='left:"+left_pos+"px; top:"+top_pos+"px;' ";
-			var tmp_div = "<div class='tetrjs-board-block' id='tp_"+j+"_"+i+"' "+tmp_pos+"></div>"
-			jPreviewBoard.append(tmp_div);
+			var tmp_div = "<div class='"+this.DOM_CLASSES.BOARD_BLOCK+"' id='tp_"+j+"_"+i+"' "+tmp_pos+"></div>"
+			$previewBoard.append(tmp_div);
 		}
 	}
 }
@@ -137,9 +163,9 @@ Tetrjs.prototype.generateRandomBlockType = function(){
 Tetrjs.prototype.makePreviewBlock = function(){
 	
 	//Remove the current block from the preview
-	var parent = this;
+	var self = this;
 	$.each(this.previewPiece.blocks, function(index, block_id){
-		$(block_id).removeClass(parent.previewPiece.class);
+		$(block_id).removeClass(self.previewPiece.class);
 	});
 	this.previewPiece.blocks = [];
 
@@ -149,7 +175,6 @@ Tetrjs.prototype.makePreviewBlock = function(){
 	this.previewPiece.class = BLOCKS[this.previewPiece.type]['class'];
 	var start_col=2;
 	var start_row=2;
-	var parent = this;
     var curr_block_position_rows = BLOCKS[this.previewPiece.type]['positions'][0]['rows'];
 	$.each(curr_block_position_rows, function(row_index, row){
 		$.each(row, function(col_index, col_is_active){
@@ -157,9 +182,9 @@ Tetrjs.prototype.makePreviewBlock = function(){
 				var block_col = start_col+parseInt(col_index);
 				var block_row = start_row+parseInt(row_index);
 				var id = '#tp_'+block_col+'_'+block_row;
-				$(id).addClass(parent.previewPiece.class);
+				$(id).addClass(self.previewPiece.class);
 
-				parent.previewPiece.blocks.push(id);
+				self.previewPiece.blocks.push(id);
 			}
 		});
 	});
@@ -173,7 +198,7 @@ Tetrjs.prototype.makePreviewBlock = function(){
  * @return void
  */
 Tetrjs.prototype.moveBlock = function(desired_direction){
-
+	var self = this;
 	var curr_block_no_positions = BLOCKS[this.currentBlock.type]['no_positions'];
 	var curr_block_pos_trans_row = 0;
 	var curr_block_pos_trans_col = 0;
@@ -196,10 +221,10 @@ Tetrjs.prototype.moveBlock = function(desired_direction){
 	
 	var tmp_desired_positions = [];
 	var lock_current_block = false;
-	var tmp_lowest_col = this.boardColumnsWide;
-	var tmp_lowest_row = this.boardRowsHigh;
+	var tmp_lowest_col = this.SETTINGS.BOARD_COLS_WIDE;
+	var tmp_lowest_row = this.SETTINGS.BOARD_ROWS_HIGH;
+
 	var error = false;
-	var parent = this;
     var curr_block_position_rows = BLOCKS[this.currentBlock.type]['positions'][desired_position]['rows'];
 	$.each(curr_block_position_rows, function(row_index, row){
 
@@ -207,44 +232,46 @@ Tetrjs.prototype.moveBlock = function(desired_direction){
 		$.each(row, function(col_index, col_is_active){
 			
 			if(col_is_active==1){
-				var tmp_piece_col_pos = parent.currentBlock.col + parseInt(col_index);
-				var tmp_piece_row_pos = parent.currentBlock.row + parseInt(row_index);
+				var tmp_piece_col_pos = self.currentBlock.col + parseInt(col_index);
+				var tmp_piece_row_pos = self.currentBlock.row + parseInt(row_index);
 				
-				var tmp_piece_desired_col = tmp_piece_col_pos+curr_block_pos_trans_col;
-				var tmp_piece_desired_row = tmp_piece_row_pos+curr_block_pos_trans_row;
+                
+				var tmp_piece_desired_col = tmp_piece_col_pos + curr_block_pos_trans_col;
+				var tmp_piece_desired_row = tmp_piece_row_pos + curr_block_pos_trans_row;
+                
 
 				if(desired_direction=='none'){
-					if(parent.board[tmp_piece_desired_row][tmp_piece_desired_col].hasOwnProperty('class')){
+                    
+					if(self.board[tmp_piece_desired_row][tmp_piece_desired_col].hasOwnProperty('class')){
 						// New piece but a space is already taken 
-						parent.gameOver();
+						self.gameOver();
 					}
 				}
 				
 				if(desired_direction=='left'){
-					tmp_piece_desired_col = tmp_piece_col_pos-1;
+					tmp_piece_desired_col = tmp_piece_col_pos - 1;
 				}
 
 				if(desired_direction=='right'){
-					tmp_piece_desired_col = tmp_piece_col_pos+1;
+					tmp_piece_desired_col = tmp_piece_col_pos + 1;
 				}
 
 				if(desired_direction=='down'){
-					tmp_piece_desired_row = tmp_piece_row_pos+1;
-
-					if(tmp_piece_desired_row > parent.boardRowsHigh ||
-						parent.board[tmp_piece_desired_row][tmp_piece_desired_col].hasOwnProperty('class')){
+					tmp_piece_desired_row = tmp_piece_row_pos + 1;
+					if(tmp_piece_desired_row > self.SETTINGS.BOARD_ROWS_HIGH ||
+						self.board[tmp_piece_desired_row][tmp_piece_desired_col].hasOwnProperty('class')){
 						// Already a block in the next downward position
 						lock_current_block = true;
 					}
 				}
 				
-				if(!parent.board.hasOwnProperty(tmp_piece_desired_row)){
+				if(!self.board.hasOwnProperty(tmp_piece_desired_row)){
 					//Can't move down, so error
 					error = true;
-				} else if(!parent.board[tmp_piece_desired_row].hasOwnProperty(tmp_piece_desired_col)){
+				} else if(!self.board[tmp_piece_desired_row].hasOwnProperty(tmp_piece_desired_col)){
 					//Off the board error out
 					error = true;
-				} else if(parent.board[tmp_piece_desired_row][tmp_piece_desired_col].hasOwnProperty('class')) {
+				} else if(self.board[tmp_piece_desired_row][tmp_piece_desired_col].hasOwnProperty('class')) {
 					//Board spot already taken
 					error = true;
 				}
@@ -278,15 +305,15 @@ Tetrjs.prototype.moveBlock = function(desired_direction){
 			// Set the new current row and column
 			this.currentBlock.col = tmp_lowest_col;
 			this.currentBlock.row = tmp_lowest_row;
-			var parent = this;
+			var self = this;
 			// Apply the 'movement' by modifying the block's class
 			$.each(tmp_desired_positions, function(pos_index, pos){
 
 				var tmp_id = '#tb_'+pos['col']+'_'+pos['row'];
 				var jTMP = $(tmp_id);
-				jTMP.addClass(parent.currentBlock.class);
-				parent.currentBlock.blockIds.push(tmp_id);
-				parent.currentBlock.blockPositions.push(pos);
+				jTMP.addClass(self.currentBlock.class);
+				self.currentBlock.blockIds.push(tmp_id);
+				self.currentBlock.blockPositions.push(pos);
 	
 			});
 		} 
@@ -294,11 +321,11 @@ Tetrjs.prototype.moveBlock = function(desired_direction){
 
     // The block has reached its final destination
 	if(lock_current_block){
-		var parent = this;
+		var self = this;
 		$.each(this.currentBlock.blockPositions, function(pos_index, pos){
 			// Lock the current block on the board
 			// by setting the permanent board class
-			parent.board[pos['row']][pos['col']] = {'class':parent.currentBlock.class};
+			self.board[pos['row']][pos['col']] = {'class':self.currentBlock.class};
 		});
 		
         // Check if the block has caused rows to be eliminated
@@ -316,7 +343,7 @@ Tetrjs.prototype.moveBlock = function(desired_direction){
  */
 Tetrjs.prototype.checkAndEliminateRows = function(){
 	var no_rows_eliminated = 0;
-    var parent = this;
+    var self = this;
 
 	//Loop over the board rows
 	$.each(this.board, function(r_index, row){
@@ -331,19 +358,19 @@ Tetrjs.prototype.checkAndEliminateRows = function(){
 		});
 
         // The entire row is full
-		if(column_full_count == parent.boardColumnsWide){
+		if(column_full_count == self.SETTINGS.BOARD_COLS_WIDE){
 			
 			no_rows_eliminated++;
 			
 			//Move the upper rows down, from the bottom up
 			for(var i=r_index; i>=1; i--){
 
-				$.each(parent.board[i], function(c_index, col){
+				$.each(self.board[i], function(c_index, col){
 					var prev_class = '';
-					if(parent.board.hasOwnProperty(i-1) &&
-						parent.board[i-1][c_index].hasOwnProperty('class')){
+					if(self.board.hasOwnProperty(i-1) &&
+						self.board[i-1][c_index].hasOwnProperty('class')){
 							// The class from the block directly above
-							prev_class = parent.board[i-1][c_index]['class'];
+							prev_class = self.board[i-1][c_index]['class'];
 					}
                     
 					var cur_id = "#tb_"+c_index+"_"+i;
@@ -356,10 +383,10 @@ Tetrjs.prototype.checkAndEliminateRows = function(){
 					if(prev_class!=''){
 						//Copy down the class from above to the block in this row
 						jCur.addClass(prev_class);
-						parent.board[i][c_index] = {'class':prev_class};
+						self.board[i][c_index] = {'class':prev_class};
 					} else {
 						//Blank block (no block above)
-						parent.board[i][c_index] = {}
+						self.board[i][c_index] = {}
 					}
 				});
 				
@@ -382,7 +409,7 @@ Tetrjs.prototype.checkAndEliminateRows = function(){
 Tetrjs.prototype.score = function(no_rows_eliminated){
 	
 	var multiple_row_bonus = 0;
-	var current_multiplier = this.currentGame.scoreMultiplier*this.currentGame.level;
+	var current_multiplier = this.SETTINGS.GAME_SCORE_MULTIPLIER * this.currentGame.level;
 
 	this.currentGame.rowsEliminated = this.currentGame.rowsEliminated+no_rows_eliminated;
 	
@@ -394,7 +421,7 @@ Tetrjs.prototype.score = function(no_rows_eliminated){
 
 	this.setScoreText();
 
-	if(this.currentGame.rowsEliminated == this.boardRowsHigh){
+	if(this.currentGame.rowsEliminated == this.SETTINGS.BOARD_ROWS_HIGH){
 		
 		// Level up
 		this.currentGame.rowsEliminated = 0;
@@ -414,7 +441,7 @@ Tetrjs.prototype.score = function(no_rows_eliminated){
  * @return void
  */
 Tetrjs.prototype.setScoreText = function(){
-	$("#tetrjs-score-container").text(this.currentGame.score);
+	$(this.DOM_IDS.SCORE_CONTAINER).text(this.currentGame.score);
 }
 
 /**
@@ -423,7 +450,7 @@ Tetrjs.prototype.setScoreText = function(){
  * @return void
  */
 Tetrjs.prototype.setLevelText = function(){
-	$("#tetrjs-level-container").text("LEVEL "+this.currentGame.level);
+	$(this.DOM_IDS.LEVEL_CONTAINER).text("LEVEL "+this.currentGame.level);
 }
 
 /**
@@ -434,9 +461,9 @@ Tetrjs.prototype.setLevelText = function(){
 Tetrjs.prototype.removeCurrentBlockFromBoard = function(){
 
 	//Remove the current class from the visible blocks
-	var parent = this;
+	var self = this;
 	$.each(this.currentBlock.blockIds, function(index,block_id){
-		$(block_id).removeClass(parent.currentBlock.class);
+		$(block_id).removeClass(self.currentBlock.class);
 	});
 	
 	//Reset the current set of blocks
@@ -460,7 +487,7 @@ Tetrjs.prototype.nextBlock = function(){
 
 	// Reset the start location for the block to appear
 	this.currentBlock.row = 1;
-	this.currentBlock.col = this.pieceStartColumn;
+	this.currentBlock.col = this.SETTINGS.PIECE_START_COL;
 
 	this.currentBlock.position = 0;
 
@@ -482,32 +509,32 @@ Tetrjs.prototype.nextBlock = function(){
  * @return void
  */
 Tetrjs.prototype.setupKeyEvents = function(){
-	var parent = this;
+	var self = this;
 	$(document).keydown(function(e) {
 		switch(e.which) {
 			case 37:
             // Left arrow key
-			parent.moveBlock('left');
+			self.moveBlock('left');
 			break;
 
 			case 38:
             // Up arrow key
-			parent.moveBlock('up');
+			self.moveBlock('up');
 			break;
 
 			case 39:
             // Right arrow key
-			parent.moveBlock('right');
+			self.moveBlock('right');
 			break;
 
 		    case 40:
             // Down arrow key
-			parent.moveBlock('down');
+			self.moveBlock('down');
 			break;
 
             case 80:
             // 'p' pressed to pause
-            parent.pauseGame();
+            self.pauseGame();
 			break;
 
             // Default - don't do anything
@@ -550,12 +577,12 @@ Tetrjs.prototype.startPlay = function(){
  */
 Tetrjs.prototype.startGameInterval = function(){
 	if(!this.gameIntervalTimer.obj){
-		var parent = this;
+		var self = this;
 		
         // Setup the interval object using the std js function
 		this.gameIntervalTimer.obj = setInterval(function(){
             //Start the action (just move the current piece down)
-			parent.moveBlock('down');
+			self.moveBlock('down');
 		}, this.gameIntervalTimer.ms);
 	}
 }
@@ -614,7 +641,7 @@ Tetrjs.prototype.newGame = function(){
     // Reset the the score, level, and interval
 	this.currentGame.score = 0;
 	this.currentGame.level = 1;
-	this.gameIntervalTimer.ms = 460;
+	this.gameIntervalTimer.ms = this.SETTINGS.GAME_INTERVAL_MS;
 
     // Reset the score and level text
 	this.setScoreText();
@@ -650,19 +677,19 @@ Tetrjs.prototype.showIntro = function(){
  * @return void
  */
 Tetrjs.prototype.showMessage = function(template_name){
-	var jModal = $('#tetrjs-modal');
-    
-    var jVeil = $('#tetrjs-modal-veil');
+	var $modal = $(this.DOM_IDS.MODAL);
+    var $veil = $(this.DOM_IDS.MODAL_VEIL);
+
 	var html = Mustache.render($('#'+template_name).html());
 
-	jModal.html(html);
+	$modal.html(html);
 
     //Center the message in the veil
-    var leftOffset = (jVeil.width() - jModal.width())/2;
-    jModal.css('left', leftOffset);
+    var leftOffset = ($veil.width() - $modal.width())/2;
+    $modal.css('left', leftOffset);
     
-    jVeil.fadeIn(200, function(){
-        jModal.fadeIn(200);
+    $veil.fadeIn(200, function(){
+        $modal.fadeIn(200);
     });
 }
 
@@ -672,13 +699,13 @@ Tetrjs.prototype.showMessage = function(template_name){
  * @return void
  */
 Tetrjs.prototype.hideMessage = function(){
-	var jModal = $('#tetrjs-modal');
-    var jVeil = $('#tetrjs-modal-veil');
-    jModal.fadeOut(100, function(){
-        jVeil.hide();
+	var $modal = $(this.DOM_IDS.MODAL);
+    var $veil = $(this.DOM_IDS.MODAL_VEIL);
+    $modal.fadeOut(100, function(){
+        $veil.hide();
 
         //Clear after the fade
-        jModal.html("");    
+        $modal.html("");    
     });
 }
 
