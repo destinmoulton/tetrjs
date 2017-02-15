@@ -86,7 +86,14 @@
     <!-- Game Over Modal Mustache.js Template -->
     <script id='tmpl-gameover' type='text/template'>
         Game Over!
-        <br/>
+        <br/><br/>
+        <table border="0" id="tetrjs-gameover-table">
+            <tbody>
+            <tr><td><strong>Score:</strong></td><td>{{ score }}</td></tr>
+            <tr><td><strong>Lines:</strong></td><td>{{ rowsEliminated }}</td></tr>
+            <tr><td><strong>Level:</strong></td><td>{{ level }}</td></tr>
+            </tbody>
+        </table>
         <br/>
         <button type="button"
                 class="btn btn-primary btn-xs"

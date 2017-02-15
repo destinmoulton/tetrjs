@@ -161,6 +161,9 @@ Tetrjs.prototype.generateRandomBlockType = function(){
  * @return void
  */
 Tetrjs.prototype.makePreviewBlock = function(){
+	if(this.isPaused){
+		return;
+	}
 	
 	//Remove the current block from the preview
 	var self = this;
@@ -477,6 +480,10 @@ Tetrjs.prototype.removeCurrentBlockFromBoard = function(){
  * @return void
  */
 Tetrjs.prototype.nextBlock = function(){
+	if(this.isPaused){
+		return;
+	}
+
 	// Reset all the variables
 	this.currentBlock.blockIds = [];
 	this.currentBlock.blockPositions = [];
@@ -552,6 +559,7 @@ Tetrjs.prototype.setupKeyEvents = function(){
  * @return void
  */
 Tetrjs.prototype.startPlay = function(){
+    this.isPaused = false;
 
 	if(this.previewPiece.type==""){
 		//New game is starting
@@ -562,8 +570,6 @@ Tetrjs.prototype.startPlay = function(){
 		//Create the new piece
 		this.nextBlock();
 	}
-
-    this.isPaused = false;
 
 	this.startGameInterval();
 
@@ -622,11 +628,18 @@ Tetrjs.prototype.pauseGame = function(){
  * @return void
  */
 Tetrjs.prototype.gameOver = function(){
+	this.isPaused = true;
+
     // Stop the game interval
 	this.killGameInterval();
 
+	var template_vars = {
+		score:this.currentGame['score'],
+		rowsEliminated:this.currentGame['rowsEliminated'],
+		level:this.currentGame['level']
+	}
     // Show the gameover modal message (from template)
-	this.showMessage('tmpl-gameover');
+	this.showMessage('tmpl-gameover', template_vars);
 }
 
 /**
@@ -676,11 +689,12 @@ Tetrjs.prototype.showIntro = function(){
  * 
  * @return void
  */
-Tetrjs.prototype.showMessage = function(template_name){
+Tetrjs.prototype.showMessage = function(template_name, vars){
 	var $modal = $(this.DOM_IDS.MODAL);
     var $veil = $(this.DOM_IDS.MODAL_VEIL);
 
-	var html = Mustache.render($('#'+template_name).html());
+	var template_html = $('#'+template_name).html();
+	var html = Mustache.render(template_html, vars);
 
 	$modal.html(html);
 
