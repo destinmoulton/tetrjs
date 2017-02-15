@@ -124,64 +124,57 @@ table#tetrjs-gameover-table > tbody > tr > td{
 
 /** The Block Styles **/
 .tetrjs-block-straight{
-	-moz-box-shadow:    inset 0 0 4px #000000;
-	-webkit-box-shadow: inset 0 0 4px #000000;
-	box-shadow:         inset 0 0 4px #000000;
 	background-color:red;
     border:1px solid black;
-    
+	-webkit-box-shadow: inset 0px 0px 5px 0px rgba(0,0,0,0.75);
+	-moz-box-shadow: inset 0px 0px 5px 0px rgba(0,0,0,0.75);
+	box-shadow: inset 0px 0px 5px 0px rgba(0,0,0,0.75);
 }
 
 .tetrjs-block-l-left{
-	-moz-box-shadow:    inset 0 0 4px #000000;
-	-webkit-box-shadow: inset 0 0 4px #000000;
-	box-shadow:         inset 0 0 4px #000000;
 	background-color:#1673DE;
     border:1px solid black;
-    
+    -webkit-box-shadow: inset 0px 0px 5px 0px rgba(0,0,0,0.75);
+	-moz-box-shadow: inset 0px 0px 5px 0px rgba(0,0,0,0.75);
+	box-shadow: inset 0px 0px 5px 0px rgba(0,0,0,0.75);
 }
 
 .tetrjs-block-l-right{
-	-moz-box-shadow:    inset 0 0 4px #000000;
-	-webkit-box-shadow: inset 0 0 4px #000000;
-	box-shadow:         inset 0 0 4px #000000;
 	background-color:#8D4CC2;
     border:1px solid black;
-    
+	-webkit-box-shadow: inset 0px 0px 5px 0px rgba(0,0,0,0.75);
+	-moz-box-shadow: inset 0px 0px 5px 0px rgba(0,0,0,0.75);
+	box-shadow: inset 0px 0px 5px 0px rgba(0,0,0,0.75);
 }
 
 .tetrjs-block-square{
-	-moz-box-shadow:    inset 0 0 4px #000000;
-	-webkit-box-shadow: inset 0 0 4px #000000;
-	box-shadow:         inset 0 0 4px #000000;
 	background-color:orange;
     border:1px solid black;
-    
+	-webkit-box-shadow: inset 0px 0px 5px 0px rgba(0,0,0,0.75);
+	-moz-box-shadow: inset 0px 0px 5px 0px rgba(0,0,0,0.75);
+	box-shadow: inset 0px 0px 5px 0px rgba(0,0,0,0.75);   
 }
 
 .tetrjs-block-s{
-	-moz-box-shadow:    inset 0 0 4px #000000;
-	-webkit-box-shadow: inset 0 0 4px #000000;
-	box-shadow:         inset 0 0 4px #000000;
 	background-color:yellow;
     border:1px solid black;
-    
+	-webkit-box-shadow: inset 0px 0px 5px 0px rgba(0,0,0,0.75);
+	-moz-box-shadow: inset 0px 0px 5px 0px rgba(0,0,0,0.75);
+	box-shadow: inset 0px 0px 5px 0px rgba(0,0,0,0.75);
 }
 
 .tetrjs-block-z{
-	-moz-box-shadow:    inset 0 0 4px #000000;
-	-webkit-box-shadow: inset 0 0 4px #000000;
-	box-shadow:         inset 0 0 4px #000000;
 	background-color:turquoise;
     border:1px solid black;
-    
+	-webkit-box-shadow: inset 0px 0px 5px 0px rgba(0,0,0,0.75);
+	-moz-box-shadow: inset 0px 0px 5px 0px rgba(0,0,0,0.75);
+	box-shadow: inset 0px 0px 5px 0px rgba(0,0,0,0.75);
 }
 
 .tetrjs-block-t{
-	-moz-box-shadow:    inset 0 0 4px #000000;
-	-webkit-box-shadow: inset 0 0 4px #000000;
-	box-shadow:         inset 0 0 4px #000000;
 	background-color:#59C24C;
     border:1px solid black;
-    
+	-webkit-box-shadow: inset 0px 0px 5px 0px rgba(0,0,0,0.75);
+	-moz-box-shadow: inset 0px 0px 5px 0px rgba(0,0,0,0.75);
+	box-shadow: inset 0px 0px 5px 0px rgba(0,0,0,0.75);
 }
