@@ -730,8 +730,11 @@ Tetrjs.prototype.showMessage = function(template_name, vars){
 	$modal.html(html);
 
     //Center the message in the veil
-    var leftOffset = ($veil.width() - $modal.width())/2;
+    var leftOffset = Math.floor(($veil.width() - $modal.outerWidth())/2);
+	var topOffset = Math.floor(($veil.height() - $modal.outerHeight())/2);
+
     $modal.css('left', leftOffset);
+	$modal.css('top', topOffset);
     
     $veil.fadeIn(200, function(){
         $modal.fadeIn(200);
