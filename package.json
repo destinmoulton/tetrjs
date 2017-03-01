@@ -4,7 +4,7 @@
   "description": "Tetris in JavaScript.",
   "main": "tetrjs.js",
   "scripts": {
-    "compile:mustache": "gulp templates",
+    "compile:mustache": "gulp watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

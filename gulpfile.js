@@ -4,7 +4,7 @@ var hoganCompiler = require('gulp-hogan-precompile');
 var declare = require('gulp-declare');
 var concat = require('gulp-concat');
  
-gulp.task('templates', function() {
+gulp.task('compile-templates', function() {
   gulp.src('templates/**/*.mustache')
       .pipe(hoganCompiler())
       .pipe(declare({
@@ -13,4 +13,9 @@ gulp.task('templates', function() {
       }))
       .pipe(concat('tetrjs.templates.js'))
       .pipe(gulp.dest('.'));
+});
+
+gulp.task('watch', function() {
+    gulp.start('compile-templates');
+    gulp.watch('templates/**/*.mustache', ['compile-templates']);
 });
