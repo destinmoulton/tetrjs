@@ -1,0 +1,28 @@
+{
+  "name": "tetrjs",
+  "version": "0.4.0",
+  "description": "Tetris in JavaScript.",
+  "main": "tetrjs.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/destinmoulton/tetrjs.git"
+  },
+  "keywords": [
+    "tetris",
+    "js",
+    "javascript",
+    "mustache"
+  ],
+  "author": "Destin Moulton",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/destinmoulton/tetrjs/issues"
+  },
+  "homepage": "https://github.com/destinmoulton/tetrjs#readme",
+  "devDependencies": {
+    "hoganizer": "0.0.5"
+  }
+}
