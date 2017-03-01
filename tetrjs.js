@@ -693,7 +693,6 @@ Tetrjs.prototype.showMessage = function(template_name, vars){
 	var $modal = $(this.DOM_IDS.MODAL);
     var $veil = $(this.DOM_IDS.MODAL_VEIL);
 
-	var template_html = $('#'+template_name).html();
 	var html = templates[template_name].render(vars);
 
 	$modal.html(html);
@@ -723,10 +722,17 @@ Tetrjs.prototype.hideMessage = function(){
     });
 }
 
-var tetrjs = new Tetrjs();
-$(function(){
-	
-	tetrjs.setupKeyEvents();
+/**
+ * Run tetrjs.
+ * 
+ * @param string containerID The container id for tetrjs.
+ */
+Tetrjs.prototype.run = function(containerID){
+	$("#" + containerID).html(templates['container'].render({}));
 
-	tetrjs.showIntro();
-});
+	this.setupKeyEvents();
+
+	this.showIntro();
+}
+
+

@@ -4,7 +4,7 @@
   "description": "Tetris in JavaScript.",
   "main": "tetrjs.js",
   "scripts": {
-    "compile:mustache": "node compile_mustache.js",
+    "compile:mustache": "gulp templates",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -24,6 +24,9 @@
   },
   "homepage": "https://github.com/destinmoulton/tetrjs#readme",
   "devDependencies": {
-    "hoganizer": "0.0.5"
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-declare": "^0.3.0",
+    "gulp-hogan-precompile": "^0.1.1"
   }
 }
