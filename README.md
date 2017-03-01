@@ -13,7 +13,9 @@ Tetrjs should work in most modern browsers. I have not tested Internet Explorer,
 
 #### HTML and Templates
 ***
-index.html contains a basic set of HTML and mustache templates to get started.
+The HTML mustache templates are stored in the templates directory.
+
+The templates are compiled using (hoganizer)[https://github.com/askmike/hoganizer]. 
 
 #### License
 ***
