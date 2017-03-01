@@ -619,7 +619,7 @@ Tetrjs.prototype.pauseGame = function(){
     this.isPaused = true;
 
     // Show the paused modal message (from template)
-	this.showMessage('tmpl-paused');
+	this.showMessage('paused');
 }
 
 /**
@@ -639,7 +639,7 @@ Tetrjs.prototype.gameOver = function(){
 		level:this.currentGame['level']
 	}
     // Show the gameover modal message (from template)
-	this.showMessage('tmpl-gameover', template_vars);
+	this.showMessage('gameover', template_vars);
 }
 
 /**
@@ -681,7 +681,7 @@ Tetrjs.prototype.showIntro = function(){
 	this.setupBoard();
 	this.setupPreviewBoard();
     
-    this.showMessage('tmpl-intro');
+    this.showMessage('intro');
 }
 
 /**
@@ -694,7 +694,7 @@ Tetrjs.prototype.showMessage = function(template_name, vars){
     var $veil = $(this.DOM_IDS.MODAL_VEIL);
 
 	var template_html = $('#'+template_name).html();
-	var html = Mustache.render(template_html, vars);
+	var html = templates[template_name].render(vars);
 
 	$modal.html(html);
 
