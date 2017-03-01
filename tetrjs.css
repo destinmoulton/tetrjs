@@ -76,11 +76,9 @@
     display:none;
 	top:110px;
 	left:45px;
-	/*width:130px;*/
-	border-radius:15px;
 	text-align:center;
 	padding:15px;
-	border:2px solid black;
+	border:3px solid #7098b5;
 	background-color:white;
     z-index:99;
 }

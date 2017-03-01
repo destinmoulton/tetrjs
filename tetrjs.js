@@ -700,6 +700,23 @@ Tetrjs.prototype.showIntro = function(){
 }
 
 /**
+ * Show the About Popover
+ * 
+ * @return void
+ */
+Tetrjs.prototype.showAbout = function(){
+	var self = this;
+
+	self.killGameInterval();
+    self.isPaused = true;
+
+	self.showMessage('about');
+	$('button#tetrjs-about-close').click(function(){
+		self.startPlay();
+	});
+}
+
+/**
  * Show a message in the modal window.
  * 
  * @return void
@@ -752,6 +769,10 @@ Tetrjs.prototype.run = function(containerID){
 
 	$('button#tetrjs-container-new').click(function(){
 		self.newGame()
+	});
+
+	$('button#tetrjs-container-about').click(function(){
+		self.showAbout()
 	});
 
 	this.setupKeyEvents();
