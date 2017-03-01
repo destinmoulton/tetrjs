@@ -610,16 +610,22 @@ Tetrjs.prototype.killGameInterval = function(){
  * @return void
  */
 Tetrjs.prototype.pauseGame = function(){
-    if(this.isPaused){
+	var self = this;
+    if(self.isPaused){
         //Already paused, so start the game
-        this.startPlay();
+        self.startPlay();
         return;
     }
-	this.killGameInterval();
-    this.isPaused = true;
+	self.killGameInterval();
+    self.isPaused = true;
 
     // Show the paused modal message (from template)
-	this.showMessage('tmpl-paused');
+	self.showMessage('paused');
+
+	$('button#tetrjs-pause-play').click(function(){
+		self.startPlay();
+	});
+	
 }
 
 /**
@@ -628,18 +634,23 @@ Tetrjs.prototype.pauseGame = function(){
  * @return void
  */
 Tetrjs.prototype.gameOver = function(){
-	this.isPaused = true;
+	var self = this;
+	self.isPaused = true;
 
     // Stop the game interval
-	this.killGameInterval();
+	self.killGameInterval();
 
 	var template_vars = {
-		score:this.currentGame['score'],
-		rowsEliminated:this.currentGame['rowsEliminated'],
-		level:this.currentGame['level']
+		score:self.currentGame['score'],
+		rowsEliminated:self.currentGame['rowsEliminated'],
+		level:self.currentGame['level']
 	}
     // Show the gameover modal message (from template)
-	this.showMessage('tmpl-gameover', template_vars);
+	self.showMessage('gameover', template_vars);
+
+	$('button#tetrjs-gameover-newgame').click(function(){
+		self.newGame();
+	});
 }
 
 /**
@@ -678,10 +689,14 @@ Tetrjs.prototype.newGame = function(){
  * @return void
  **/
 Tetrjs.prototype.showIntro = function(){
-	this.setupBoard();
-	this.setupPreviewBoard();
+	var self = this;
+	self.setupBoard();
+	self.setupPreviewBoard();
     
-    this.showMessage('tmpl-intro');
+    self.showMessage('intro');
+	$('button#tetrjs-intro-newgame').click(function(){
+		self.newGame();
+	});
 }
 
 /**
@@ -693,8 +708,7 @@ Tetrjs.prototype.showMessage = function(template_name, vars){
 	var $modal = $(this.DOM_IDS.MODAL);
     var $veil = $(this.DOM_IDS.MODAL_VEIL);
 
-	var template_html = $('#'+template_name).html();
-	var html = Mustache.render(template_html, vars);
+	var html = templates[template_name].render(vars);
 
 	$modal.html(html);
 
@@ -723,10 +737,26 @@ Tetrjs.prototype.hideMessage = function(){
     });
 }
 
-var tetrjs = new Tetrjs();
-$(function(){
-	
-	tetrjs.setupKeyEvents();
+/**
+ * Run tetrjs.
+ * 
+ * @param string containerID The container id for tetrjs.
+ */
+Tetrjs.prototype.run = function(containerID){
+	var self = this;
+	$("#" + containerID).html(templates['container'].render());
 
-	tetrjs.showIntro();
-});
+	$('button#tetrjs-container-pause').click(function(){
+		self.pauseGame()
+	});
+
+	$('button#tetrjs-container-new').click(function(){
+		self.newGame()
+	});
+
+	this.setupKeyEvents();
+
+	this.showIntro();
+}
+
+
