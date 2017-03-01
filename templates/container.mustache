@@ -8,12 +8,12 @@
         <br/>
         <button type="button"
                 class="btn btn-primary btn-xs"
-                onclick="tetrjs.pauseGame()">Pause ('p')</button>
+                onclick="{{ tetrjs.pauseGame() }}">Pause ('p')</button>
         <br/>
         <br/>
         <button type="button"
                 class="btn btn-primary btn-xs"
-                onclick="tetrjs.newGame()">New Game</button>
+                onclick="{{ tetrjs.newGame() }}">New Game</button>
 
     </div>
     <div id='tetrjs-modal-veil'></div>

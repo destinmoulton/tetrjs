@@ -15,7 +15,7 @@ Tetrjs should work in most modern browsers. I have not tested Internet Explorer,
 ***
 The HTML mustache templates are stored in the templates directory.
 
-The templates are compiled using [hoganizer](https://github.com/askmike/hoganizer). 
+The templates are compiled using [gulp-hogan-precompile](https://github.com/eneko89/gulp-hogan-precompile). 
 
 #### License
 ***

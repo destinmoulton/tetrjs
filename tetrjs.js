@@ -678,10 +678,14 @@ Tetrjs.prototype.newGame = function(){
  * @return void
  **/
 Tetrjs.prototype.showIntro = function(){
-	this.setupBoard();
-	this.setupPreviewBoard();
+	var self = this;
+	self.setupBoard();
+	self.setupPreviewBoard();
     
-    this.showMessage('intro');
+    self.showMessage('intro');
+	$('button#tetrjs-intro-newgame').click(function(){
+		self.newGame();
+	});
 }
 
 /**
@@ -728,7 +732,7 @@ Tetrjs.prototype.hideMessage = function(){
  * @param string containerID The container id for tetrjs.
  */
 Tetrjs.prototype.run = function(containerID){
-	$("#" + containerID).html(templates['container'].render({}));
+	$("#" + containerID).html(templates['container'].render({tetrjs:this}));
 
 	this.setupKeyEvents();
 
