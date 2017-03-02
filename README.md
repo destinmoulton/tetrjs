@@ -16,9 +16,9 @@ Note: Tetrjs works fine without Bootstrap. The icons and buttons are a little dr
 
 #### HTML Templates
 ***
-The HTML for Tetrjs is hotloaded using Hogan. The hogan/mustache templates are stored in the 'templates' directory.
+The HTML for Tetrjs is loaded via mustache templates. The templates are stored in the 'templates' directory.
 
-The templates are pre-compiled to the file tetrjs.templates.js.
+The templates are pre-compiled into the file tetrjs.templates.js.
 
 The templates are compiled using [gulp-hogan-precompile](https://github.com/eneko89/gulp-hogan-precompile).
 
