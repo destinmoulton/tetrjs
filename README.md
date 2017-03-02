@@ -20,7 +20,7 @@ First, clone the repository into a directory.
 
 `$ git clone https://github.com/destinmoulton/tetrjs`
 
-CSS Includes
+CSS -- Put this in the header
 ```html
 <!-- Bootstrap for Better Buttons and Icons -->
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -29,7 +29,7 @@ CSS Includes
 <link rel="stylesheet" type="text/css" href="tetrjs.css">
 ```
 
-JS Includes
+JS -- Either in the header or after the content
 ```html
 <!-- Required Javascript Libraries -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
