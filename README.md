@@ -8,13 +8,17 @@ Tetrjs should work in most modern browsers. I have not tested Internet Explorer,
 ***
 Tetrjs has a few requirements:
 
-* Twitter Bootstrap > 3.3.5 
+* Twitter Bootstrap > 3.3.5 (just the css)
 * jQuery
 * hogan.js
 
-#### HTML and Templates
+Note: Tetrjs works fine without Bootstrap. The icons and buttons are a little drab without it.
+
+#### HTML Templates
 ***
-The HTML hogan/mustache templates are stored in the templates directory.
+The HTML for Tetrjs is hotloaded using Hogan. The hogan/mustache templates are stored in the 'templates' directory.
+
+The templates are pre-compiled to the file tetrjs.templates.js.
 
 The templates are compiled using [gulp-hogan-precompile](https://github.com/eneko89/gulp-hogan-precompile).
 
