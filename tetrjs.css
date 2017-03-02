@@ -2,14 +2,23 @@
 #tetrjs-container{
 	position:relative;
 	width:375px;
-	height:400px;
+	height:425px;
 	border:2px solid #757c87;
+}
+
+#tetrjs-title-container{
+	position:absolute;
+	top:5px;
+	left:15px;
+	font-size:16px;
+	font-weight:bold;
+	font-family: Arial, Helvetica, sans-serif;
 }
 
 /** Preview Piece Box **/
 #tetrjs-next-piece-preview-container{
 	position:absolute;
-	top:15px;
+	top:30px;
 	left:230px;
 	border:2px solid gray;
 }
@@ -17,7 +26,7 @@
 /** The Score Box **/
 #tetrjs-score-container{
 	position:absolute;
-	top:110px;
+	top:135px;
 	left:230px;
 	width:120px;
 	height:33px;
@@ -30,7 +39,7 @@
 /** The Level Box **/
 #tetrjs-level-container{
 	position:absolute;
-	top:160px;
+	top:185px;
 	left:230px;
 	width:120px;
 	height:33px;
@@ -43,7 +52,7 @@
 /** The Actions Box **/
 #tetrjs-actions-container{
 	position:absolute;
-	top:195px;
+	top:220px;
 	left:230px;
 }
 
@@ -108,7 +117,7 @@ table#tetrjs-gameover-table > tbody > tr > td{
 /** The Board Style **/
 #tetrjs-board{
 	position:absolute;
-	top:15px;
+	top:30px;
 	left:15px;
 	border:5px solid black;
 }
