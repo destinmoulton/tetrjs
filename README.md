@@ -1,6 +1,6 @@
 #### What is Tetrjs?
 ***
-Tetrjs is a javascript implementation of the classic Russian tile matching game.
+Tetrjs is a JavaScript implementation of the classic Russian tile matching game. Tetrjs utitilizes jQuery to manipulate the HTML and CSS to render the board and blocks.
 
 Tetrjs should work in most modern browsers. I have not tested Internet Explorer, but IE8+ should work fine (guessing).
 
@@ -13,6 +13,54 @@ Tetrjs has a few requirements:
 * hogan.js
 
 Note: Tetrjs works fine without Bootstrap. The icons and buttons are a little drab without it.
+
+### Embedding Tetrjs in Your Website
+***
+First, clone the repository into a directory.
+
+`$ git clone https://github.com/destinmoulton/tetrjs`
+
+CSS Includes
+```html
+<!-- Bootstrap for Better Buttons and Icons -->
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- Tetrjs CSS -->
+<link rel="stylesheet" type="text/css" href="tetrjs.css">
+```
+
+JS Includes
+```html
+<!-- Required Javascript Libraries -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="https://twitter.github.com/hogan.js/builds/3.0.1/hogan-3.0.1.js"></script>
+
+<!-- The Tetrjs Block Definitions -->
+<script src="tetrjs.blocks.js"></script>
+
+<!-- The Tetrjs Pre-compiled Mustache Templates -->
+<script src="tetrjs.templates.js"></script>
+
+<!-- The Tetrjs Game Logic -->
+<script src="tetrjs.js"></script>
+
+<script>
+    $(function(){
+        // Create an instance of Tetrjs
+        var tetrjs = new Tetrjs();
+        // Run Tetrjs
+        tetrjs.run('tetrjs-wrapper');
+    });
+</script>
+```
+
+HTML Container
+```html
+<!-- Put this container where you want Tetrjs to appear -->
+<div id="tetrjs-wrapper"></div>
+```
+
+Note: You can change the name 'tetrjs-wrapper' to whatever you prefer. Just remember to change it in both locations (HTML and JS).
 
 #### HTML Templates
 ***
