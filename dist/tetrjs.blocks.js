@@ -1,9 +1,9 @@
 /*
- * Defines the various block types and their
+ * Defines the Tetrjs block types and their
  * possible positions.
  *
  * @author Destin Moulton
- * @version 0.6
+ * @version 1.0
  * @license MIT
  *
  *

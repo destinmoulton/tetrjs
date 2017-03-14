@@ -3,8 +3,8 @@
  * 
  * @author Destin Moulton
  * @license MIT
- * @version 0.6
- * https://github.com/destinmoulton/tetrjs
+ * @version 1.0
+ * @link https://github.com/destinmoulton/tetrjs
  */
 
 /**

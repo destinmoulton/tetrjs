@@ -27,7 +27,7 @@ gulp.task('watch', function() {
 var pkg = require('./package.json');
 var banner = ['/**',
   ' * <%= pkg.name %> - <%= pkg.description %>',
-  ' * @author v<%= pkg.author %>',
+  ' * @author <%= pkg.author %>',
   ' * @version v<%= pkg.version %>',
   ' * @link <%= pkg.homepage %>',
   ' * @license <%= pkg.license %>',
