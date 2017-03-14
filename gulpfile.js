@@ -3,6 +3,7 @@ var gulp = require('gulp');
 var hoganCompiler = require('gulp-hogan-precompile');
 var declare = require('gulp-declare');
 var concat = require('gulp-concat');
+var uglify = require('gulp-uglify');
  
 gulp.task('compile-templates', function() {
   gulp.src('templates/**/*.mustache')
@@ -11,11 +12,18 @@ gulp.task('compile-templates', function() {
         namespace: 'templates',
         noRedeclare: true
       }))
-      .pipe(concat('tetrjs.templates.js'))
+      .pipe(concat('dist/tetrjs.templates.js'))
       .pipe(gulp.dest('.'));
 });
 
 gulp.task('watch', function() {
     gulp.start('compile-templates');
     gulp.watch('templates/**/*.mustache', ['compile-templates']);
+});
+
+gulp.task('uglify-js', function(){
+    gulp.src(['dist/tetrjs.blocks.js', 'dist/tetrjs.templates.js', 'dist/tetrjs.js'])
+        .pipe(concat('tetrjs.min.js'))
+        .pipe(uglify())
+        .pipe(gulp.dest('./dist'));
 });
