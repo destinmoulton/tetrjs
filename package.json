@@ -5,6 +5,7 @@
   "main": "tetrjs.js",
   "scripts": {
     "compile:mustache": "gulp watch",
+    "uglify": "gulp uglify-js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
