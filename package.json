@@ -24,11 +24,12 @@
   "bugs": {
     "url": "https://github.com/destinmoulton/tetrjs/issues"
   },
-  "homepage": "https://github.com/destinmoulton/tetrjs#readme",
+  "homepage": "https://github.com/destinmoulton/tetrjs",
   "devDependencies": {
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.1",
     "gulp-declare": "^0.3.0",
+    "gulp-header": "^1.8.8",
     "gulp-hogan-precompile": "^0.1.1",
     "gulp-uglify": "^2.1.0"
   }
