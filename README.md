@@ -1,26 +1,33 @@
 #### What is Tetrjs?
-***
+
+---
+
 Tetrjs is a JavaScript implementation of the classic Russian tile matching game. Tetrjs utitilizes jQuery to manipulate the HTML and CSS to render the board and blocks.
 
 Tetrjs should work in most modern browsers. I have not tested Internet Explorer, but IE8+ should work fine (guessing).
 
 #### Requirements
-***
+
+---
+
 Tetrjs has a few requirements:
 
-* Twitter Bootstrap > 3.3.5 (just the css)
-* jQuery
-* hogan.js
+-   Twitter Bootstrap > 3.3.5 (just the css)
+-   jQuery
+-   hogan.js
 
 Note: Tetrjs works fine without Bootstrap. The icons and buttons are a little drab without it.
 
 ### Embedding Tetrjs in Your Website
-***
+
+---
+
 First, clone the repository into a directory.
 
 `$ git clone https://github.com/destinmoulton/tetrjs`
 
 CSS -- Put this in the header
+
 ```html
 <!-- Bootstrap for Better Buttons and Icons -->
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -30,6 +37,7 @@ CSS -- Put this in the header
 ```
 
 JS -- Either in the header or after the content
+
 ```html
 <!-- Required Javascript Libraries -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
@@ -55,6 +63,7 @@ JS -- Either in the header or after the content
 ```
 
 HTML Container
+
 ```html
 <!-- Put this container where you want Tetrjs to appear -->
 <div id="tetrjs-wrapper"></div>
@@ -63,7 +72,9 @@ HTML Container
 Note: You can change the name 'tetrjs-wrapper' to whatever you prefer. Just remember to change it in both locations (HTML and JS).
 
 #### HTML Templates
-***
+
+---
+
 The HTML for Tetrjs is loaded via mustache templates. The templates are stored in the 'templates' directory.
 
 The templates are pre-compiled into the file tetrjs.templates.js.
@@ -75,7 +86,5 @@ The gulpfile contains a gulp 'compile-templates' and 'watch'.
 Running `$ npm run compile:mustache` will start the compiler in watch mode.
 
 #### License
-***
-Tetrjs is released under the MIT license.
 
-
+MIT
