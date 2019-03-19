@@ -1,0 +1,174 @@
+/** The Main Tetrjs Box **/
+#tetrjs-container {
+  position: relative;
+  width: 375px;
+  height: 425px;
+  border: 2px solid #757c87;
+  font-family: Verdana, Arial, sans-serif; }
+
+#tetrjs-title-container {
+  position: absolute;
+  top: 5px;
+  left: 15px;
+  font-size: 16px;
+  font-weight: bold;
+  font-family: Verdana, Arial, sans-serif; }
+
+/** Preview Piece Box **/
+#tetrjs-next-piece-preview-container {
+  position: absolute;
+  top: 30px;
+  left: 230px;
+  border: 2px solid gray; }
+
+/** The Score Box **/
+#tetrjs-score-container {
+  position: absolute;
+  top: 135px;
+  left: 230px;
+  width: 120px;
+  height: 33px;
+  padding: 5px;
+  text-align: center;
+  font-weight: bold;
+  border: 2px solid black; }
+
+/** The Level Box **/
+#tetrjs-level-container {
+  position: absolute;
+  top: 185px;
+  left: 230px;
+  width: 120px;
+  height: 33px;
+  padding: 5px;
+  text-align: center;
+  font-weight: bold;
+  border: 2px solid black; }
+
+/** The Actions Box **/
+#tetrjs-actions-container {
+  position: absolute;
+  top: 220px;
+  left: 230px; }
+
+/** Keyboard Arrow Box **/
+/** Keyboard Arrow Styles **/
+#tetrjs-arrows-container {
+  bottom: 10px;
+  width: 105px;
+  height: 70px;
+  margin-left: auto;
+  margin-right: auto; }
+  #tetrjs-arrows-container .arrow {
+    position: absolute;
+    border: 1px solid gray;
+    border-radius: 3px;
+    padding: 4px 4px 4px 4px;
+    height: 35px;
+    width: 35px;
+    font-size: 18px;
+    text-align: center; }
+    #tetrjs-arrows-container .arrow #up {
+      margin-left: auto;
+      margin-right: auto; }
+    #tetrjs-arrows-container .arrow #left {
+      top: 35px;
+      left: 0px; }
+    #tetrjs-arrows-container .arrow #down {
+      top: 35px;
+      left: 35px; }
+    #tetrjs-arrows-container .arrow #right {
+      top: 35px;
+      left: 70px; }
+
+/** The Modal Popover Style **/
+#tetrjs-modal {
+  position: absolute;
+  display: none;
+  top: 110px;
+  left: 45px;
+  text-align: center;
+  padding: 15px 10px 15px 10px;
+  border: 3px solid #7098b5;
+  background-color: white;
+  z-index: 99; }
+
+#tetrjs-modal-veil {
+  position: absolute;
+  display: none;
+  width: 100%;
+  height: 100%;
+  opacity: 0.6;
+  background-color: black;
+  z-index: 10; }
+
+table#tetrjs-gameover-table {
+  text-align: left; }
+
+table#tetrjs-gameover-table > tbody > tr {
+  border: 1px solid black; }
+
+table#tetrjs-gameover-table > tbody > tr > td {
+  padding: 2px; }
+
+/** The Board Style **/
+#tetrjs-board {
+  position: absolute;
+  top: 30px;
+  left: 15px;
+  border: 5px solid black; }
+
+.tetrjs-board-block {
+  position: absolute;
+  width: 20px;
+  height: 20px; }
+
+/** The Block Styles **/
+.tetrjs-block-straight {
+  background-color: red;
+  border: 1px solid black;
+  -webkit-box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.75); }
+
+.tetrjs-block-l-left {
+  background-color: #1673de;
+  border: 1px solid black;
+  -webkit-box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.75); }
+
+.tetrjs-block-l-right {
+  background-color: #8d4cc2;
+  border: 1px solid black;
+  -webkit-box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.75); }
+
+.tetrjs-block-square {
+  background-color: orange;
+  border: 1px solid black;
+  -webkit-box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.75); }
+
+.tetrjs-block-s {
+  background-color: yellow;
+  border: 1px solid black;
+  -webkit-box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.75); }
+
+.tetrjs-block-z {
+  background-color: turquoise;
+  border: 1px solid black;
+  -webkit-box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.75); }
+
+.tetrjs-block-t {
+  background-color: #59c24c;
+  border: 1px solid black;
+  -webkit-box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.75); }

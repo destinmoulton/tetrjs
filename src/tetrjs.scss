@@ -1,6 +1,4 @@
-$font-family: Verdana,
-Arial,
-sans-serif;
+$font-family: Verdana, Arial, sans-serif;
 /** The Main Tetrjs Box **/
 
 #tetrjs-container {
@@ -67,27 +65,42 @@ sans-serif;
 
 /** Keyboard Arrow Box **/
 
-#tetrjs-arrows-container {
-    position: absolute;
-    bottom: 10px;
-    left: 230px;
-    text-align: center;
-    font-size: 12px;
-}
-
+$arrow-width: 35px;
+$arrow-height: 35px;
 /** Keyboard Arrow Styles **/
 
-.tetrjs-arrow-updown {
-    border: 1px solid gray;
-    border-radius: 3px;
-    padding: 4px 4px 5px 4px;
-    margin-bottom: 3px;
-}
-
-.tetrjs-arrow-leftright {
-    border: 1px solid gray;
-    border-radius: 3px;
-    padding: 4px 4px 5px 4px;
+#tetrjs-arrows-container {
+    bottom: 10px;
+    width: $arrow-width * 3;
+    height: $arrow-height * 2;
+    margin-left: auto;
+    margin-right: auto;
+    .arrow {
+        position: absolute;
+        border: 1px solid gray;
+        border-radius: 3px;
+        padding: 4px 4px 4px 4px;
+        height: $arrow-height;
+        width: $arrow-width;
+        font-size: 18px;
+        text-align: center;
+        #up {
+            margin-left: auto;
+            margin-right: auto;
+        }
+        #left {
+            top: $arrow-height;
+            left: 0px;
+        }
+        #down {
+            top: $arrow-height;
+            left: $arrow-width;
+        }
+        #right {
+            top: $arrow-height;
+            left: $arrow-width * 2;
+        }
+    }
 }
 
 /** The Modal Popover Style **/
@@ -118,11 +131,11 @@ table#tetrjs-gameover-table {
     text-align: left;
 }
 
-table#tetrjs-gameover-table>tbody>tr {
+table#tetrjs-gameover-table > tbody > tr {
     border: 1px solid black;
 }
 
-table#tetrjs-gameover-table>tbody>tr>td {
+table#tetrjs-gameover-table > tbody > tr > td {
     padding: 2px;
 }
 
