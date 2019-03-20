@@ -1,11 +1,13 @@
 var gulp = require("gulp");
 
-var babel = require("gulp-babel");
+var babel = require("rollup-plugin-babel");
 var concat = require("gulp-concat");
 var declare = require("gulp-declare");
 var header = require("gulp-header");
 var hoganCompiler = require("gulp-hogan-precompile");
 var sass = require("gulp-sass");
+var sourcemaps = require("gulp-sourcemaps");
+var rollup = require("gulp-better-rollup");
 var uglify = require("gulp-uglify");
 
 gulp.task("compile:templates", function() {
@@ -31,9 +33,27 @@ gulp.task("compile:sass", function() {
 
 gulp.task("compile:js", function() {
     return gulp
-        .src("src/tetrjs.js")
-        .pipe(babel({ presets: ["@babel/env"] }))
-        .pipe(gulp.dest("dist"));
+        .src("src/index.js")
+        .pipe(sourcemaps.init())
+        .pipe(
+            rollup(
+                {
+                    plugins: [
+                        babel({
+                            presets: ["@babel/env"],
+                            plugins: ["@babel/plugin-proposal-class-properties"]
+                        })
+                    ]
+                },
+                {
+                    format: "umd",
+                    name: "Tetrjs",
+                    file: "tetrjs.js"
+                }
+            )
+        )
+        .pipe(sourcemaps.write())
+        .pipe(gulp.dest("dist/"));
 });
 
 gulp.task("watch", function() {
@@ -48,7 +68,7 @@ gulp.task("watch", function() {
         gulp.series(["compile:sass"])
     );
     gulp.watch(
-        "src/tetrjs.js",
+        "src/index.js",
         { ignoreInitial: false },
         gulp.series(["compile:js"])
     );
