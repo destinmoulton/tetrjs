@@ -1,4 +1,6 @@
-$font-family: Verdana, Arial, sans-serif;
+$font-family: Verdana,
+Arial,
+sans-serif;
 /** The Main Tetrjs Box **/
 
 #tetrjs-container {
@@ -166,11 +168,11 @@ table#tetrjs-gameover-table {
     text-align: left;
 }
 
-table#tetrjs-gameover-table > tbody > tr {
+table#tetrjs-gameover-table>tbody>tr {
     border: 1px solid black;
 }
 
-table#tetrjs-gameover-table > tbody > tr > td {
+table#tetrjs-gameover-table>tbody>tr>td {
     padding: 2px;
 }
 
@@ -191,9 +193,9 @@ table#tetrjs-gameover-table > tbody > tr > td {
 
 /** The Block Styles **/
 
-%block-shadow {
-    -webkit-box-shadow: inset 0px 0px 5px 1px rgba(0, 0, 0, 0.5);
-    -moz-box-shadow: inset 0px 0px 5px 1px rgba(0, 0, 0, 0.5);
+%block-style {
+    -webkit-box-shadow: inset -1px -1px 4px 1px rgba(0, 0, 0, 1);
+    -moz-box-shadow: inset -1px -1px 4px 1px rgba(0, 0, 0, 1);
     box-shadow: inset -1px -1px 4px 1px rgba(0, 0, 0, 1);
     border-top: 1px solid black;
     border-left: 1px solid black;
@@ -201,35 +203,35 @@ table#tetrjs-gameover-table > tbody > tr > td {
 
 .tetrjs-block-straight {
     background-color: red;
-    @extend %block-shadow;
+    @extend %block-style;
 }
 
 .tetrjs-block-l-left {
     background-color: #1673de;
-    @extend %block-shadow;
+    @extend %block-style;
 }
 
 .tetrjs-block-l-right {
     background-color: #8d4cc2;
-    @extend %block-shadow;
+    @extend %block-style;
 }
 
 .tetrjs-block-square {
     background-color: orange;
-    @extend %block-shadow;
+    @extend %block-style;
 }
 
 .tetrjs-block-s {
     background-color: yellow;
-    @extend %block-shadow;
+    @extend %block-style;
 }
 
 .tetrjs-block-z {
     background-color: turquoise;
-    @extend %block-shadow;
+    @extend %block-style;
 }
 
 .tetrjs-block-t {
     background-color: #59c24c;
-    @extend %block-shadow;
+    @extend %block-style;
 }
