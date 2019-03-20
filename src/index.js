@@ -7,12 +7,14 @@
  * @link https://github.com/destinmoulton/tetrjs
  */
 
+import util from "./util";
+import { BLOCKS, BLOCK_TYPES } from "./blocks";
 /**
  * The constructor.
  * Initializes the basic configuration values.
  * @return void
  */
-class Tetrjs {
+export default class Tetrjs {
     board = {};
 
     isPaused = false;
@@ -184,6 +186,7 @@ class Tetrjs {
         //Remove the current block from the preview
         var self = this;
         $.each(this.previewPiece.blocks, function(index, block_id) {
+            util.removeClass();
             $(block_id).removeClass(self.previewPiece.class);
         });
         this.previewPiece.blocks = [];
