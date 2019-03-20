@@ -1,6 +1,4 @@
-$font-family: Verdana,
-Arial,
-sans-serif;
+$font-family: Verdana, Arial, sans-serif;
 /** The Main Tetrjs Box **/
 
 #tetrjs-container {
@@ -10,14 +8,16 @@ sans-serif;
     border: 2px solid #757c87;
     font-family: $font-family;
     button {
-        color: #444444;
         background: #f3f3f3;
         border: 1px #dadada solid;
-        padding: 5px 10px;
         border-radius: 2px;
-        font-weight: bold;
+        color: #444444;
         font-size: 14px;
+        font-weight: bold; //height: 35px;
+        line-height: 35px;
         outline: none;
+        padding: 0 5px 0 5px;
+        vertical-align: middle;
         &:hover {
             border: 1px #c6c6c6 solid;
             box-shadow: 1px 1px 1px #eaeaea;
@@ -166,11 +166,11 @@ table#tetrjs-gameover-table {
     text-align: left;
 }
 
-table#tetrjs-gameover-table>tbody>tr {
+table#tetrjs-gameover-table > tbody > tr {
     border: 1px solid black;
 }
 
-table#tetrjs-gameover-table>tbody>tr>td {
+table#tetrjs-gameover-table > tbody > tr > td {
     padding: 2px;
 }
 
@@ -191,51 +191,45 @@ table#tetrjs-gameover-table>tbody>tr>td {
 
 /** The Block Styles **/
 
-$block-border: 1px solid black;
 %block-shadow {
-    -webkit-box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
-    -moz-box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
-    box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+    -webkit-box-shadow: inset 0px 0px 5px 1px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: inset 0px 0px 5px 1px rgba(0, 0, 0, 0.5);
+    box-shadow: inset -1px -1px 4px 1px rgba(0, 0, 0, 1);
+    border-top: 1px solid black;
+    border-left: 1px solid black;
 }
 
 .tetrjs-block-straight {
-    background-color: #d60000;
-    border: $block-border;
+    background-color: red;
     @extend %block-shadow;
 }
 
 .tetrjs-block-l-left {
     background-color: #1673de;
-    border: $block-border;
     @extend %block-shadow;
 }
 
 .tetrjs-block-l-right {
     background-color: #8d4cc2;
-    border: $block-border;
     @extend %block-shadow;
 }
 
 .tetrjs-block-square {
     background-color: orange;
-    border: $block-border;
     @extend %block-shadow;
 }
 
 .tetrjs-block-s {
     background-color: yellow;
-    border: $block-border;
     @extend %block-shadow;
 }
 
 .tetrjs-block-z {
     background-color: turquoise;
-    border: $block-border;
     @extend %block-shadow;
 }
 
 .tetrjs-block-t {
     background-color: #59c24c;
-    border: $block-border;
     @extend %block-shadow;
 }
