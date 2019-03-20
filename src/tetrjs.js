@@ -766,15 +766,15 @@ Tetrjs.prototype.run = function(containerID){
 	var self = this;
 	$("#" + containerID).html(templates['container'].render());
 
-	$('button#tetrjs-container-pause').click(function(){
+	$('button#tetrjs-button-pause').click(function(){
 		self.pauseGame()
 	});
 
-	$('button#tetrjs-container-new').click(function(){
+	$('button#tetrjs-button-new').click(function(){
 		self.newGame()
 	});
 
-	$('button#tetrjs-container-about').click(function(){
+	$('button#tetrjs-button-about').click(function(){
 		self.showAbout()
 	});
 
