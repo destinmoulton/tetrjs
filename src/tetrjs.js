@@ -31,7 +31,7 @@ class Tetrjs {
 
     DOM_IDS = {
         BOARD: "#tetrjs-board",
-        PREVIEW_CONTAINER: "#tetrjs-next-piece-preview-container",
+        PREVIEW_CONTAINER: "tetrjs-next-piece-preview-container",
         SCORE_CONTAINER: "#tetrjs-score-container",
         LEVEL_CONTAINER: "#tetrjs-level-container",
         MODAL: "#tetrjs-modal",
@@ -133,37 +133,31 @@ class Tetrjs {
      * @return void
      */
     setupPreviewBoard() {
-        var $previewBoard = $(this.DOM_IDS.PREVIEW_CONTAINER);
+        var $previewBoard = document.getElementById(
+            this.DOM_IDS.PREVIEW_CONTAINER
+        );
         var preview_sections_wide = 6;
         var preview_sections_high = 4;
 
         // Clear the board
-        $previewBoard.html("");
-
-        $previewBoard.width(
-            preview_sections_wide * this.SETTINGS.CELL_WIDTH_PX
-        );
-        $previewBoard.height(
-            preview_sections_high * this.SETTINGS.CELL_HEIGHT_PX
-        );
+        $previewBoard.innerHTML = "";
+        $previewBoard.style.width =
+            (preview_sections_wide * this.SETTINGS.CELL_WIDTH_PX).toString() +
+            "px";
+        $previewBoard.style.height =
+            (preview_sections_high * this.SETTINGS.CELL_HEIGHT_PX).toString() +
+            "px";
 
         for (let i = 1; i <= preview_sections_high; i++) {
             var top_pos = (i - 1) * this.SETTINGS.CELL_HEIGHT_PX;
             for (let j = 1; j <= preview_sections_wide; j++) {
                 var left_pos = (j - 1) * this.SETTINGS.CELL_WIDTH_PX;
-                var tmp_pos =
-                    " style='left:" + left_pos + "px; top:" + top_pos + "px;' ";
-                var tmp_div =
-                    "<div class='" +
-                    this.DOM_CLASSES.BOARD_BLOCK +
-                    "' id='tp_" +
-                    j +
-                    "_" +
-                    i +
-                    "' " +
-                    tmp_pos +
-                    "></div>";
-                $previewBoard.append(tmp_div);
+                let block = document.createElement("div");
+                block.style.top = top_pos + "px";
+                block.style.left = left_pos + "px";
+                block.className = this.DOM_CLASSES.BOARD_BLOCK;
+                block.setAttribute("id", `tp_${j}_${i}`);
+                $previewBoard.appendChild(block);
             }
         }
     }
