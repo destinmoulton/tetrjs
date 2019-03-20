@@ -5,6 +5,22 @@
   height: 425px;
   border: 2px solid #757c87;
   font-family: Verdana, Arial, sans-serif; }
+  #tetrjs-container button {
+    color: #444444;
+    background: #f3f3f3;
+    border: 1px #dadada solid;
+    padding: 5px 10px;
+    border-radius: 2px;
+    font-weight: bold;
+    font-size: 14px;
+    outline: none; }
+    #tetrjs-container button:hover {
+      border: 1px #c6c6c6 solid;
+      box-shadow: 1px 1px 1px #eaeaea;
+      color: #333333;
+      background: #f7f7f7; }
+    #tetrjs-container button:active {
+      box-shadow: inset 1px 1px 1px #dfdfdf; }
 
 #tetrjs-title-container {
   position: absolute;
@@ -22,28 +38,24 @@
   border: 2px solid gray; }
 
 /** The Score Box **/
-#tetrjs-score-container {
+#tetrjs-score-container, #tetrjs-level-container {
   position: absolute;
   top: 135px;
   left: 230px;
   width: 120px;
-  height: 33px;
+  height: 22px;
   padding: 5px;
   text-align: center;
   font-weight: bold;
+  font-size: 16px;
   border: 2px solid black; }
+
+#tetrjs-score-container {
+  top: 135px; }
 
 /** The Level Box **/
 #tetrjs-level-container {
-  position: absolute;
-  top: 185px;
-  left: 230px;
-  width: 120px;
-  height: 33px;
-  padding: 5px;
-  text-align: center;
-  font-weight: bold;
-  border: 2px solid black; }
+  top: 185px; }
 
 /** The Actions Box **/
 #tetrjs-actions-container {
@@ -51,35 +63,42 @@
   top: 220px;
   left: 230px; }
 
+#tetrjs-button-pause .icon {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: bold; }
+
+#tetrjs-button-pause .button-text {
+  display: inline-block; }
+  #tetrjs-button-pause .button-text:first-letter {
+    text-decoration: underline; }
+
 /** Keyboard Arrow Box **/
+#tetrjs-arrows-container #up, #tetrjs-arrows-container #left, #tetrjs-arrows-container #down, #tetrjs-arrows-container #right {
+  position: relative;
+  border: 1px solid gray;
+  border-radius: 3px;
+  height: 35px;
+  width: 35px;
+  font-size: 18px;
+  text-align: center; }
+
 /** Keyboard Arrow Styles **/
 #tetrjs-arrows-container {
   bottom: 10px;
-  width: 105px;
+  width: 111px;
   height: 70px;
   margin-left: auto;
   margin-right: auto; }
-  #tetrjs-arrows-container .arrow {
-    position: absolute;
-    border: 1px solid gray;
-    border-radius: 3px;
-    padding: 4px 4px 4px 4px;
-    height: 35px;
-    width: 35px;
-    font-size: 18px;
-    text-align: center; }
-    #tetrjs-arrows-container .arrow #up {
-      margin-left: auto;
-      margin-right: auto; }
-    #tetrjs-arrows-container .arrow #left {
-      top: 35px;
-      left: 0px; }
-    #tetrjs-arrows-container .arrow #down {
-      top: 35px;
-      left: 35px; }
-    #tetrjs-arrows-container .arrow #right {
-      top: 35px;
-      left: 70px; }
+  #tetrjs-arrows-container #up {
+    margin-left: auto;
+    margin-right: auto; }
+  #tetrjs-arrows-container #left {
+    float: left; }
+  #tetrjs-arrows-container #down {
+    float: left; }
+  #tetrjs-arrows-container #right {
+    float: left; }
 
 /** The Modal Popover Style **/
 #tetrjs-modal {
@@ -124,51 +143,35 @@ table#tetrjs-gameover-table > tbody > tr > td {
   height: 20px; }
 
 /** The Block Styles **/
-.tetrjs-block-straight {
-  background-color: red;
-  border: 1px solid black;
+.tetrjs-block-straight, .tetrjs-block-l-left, .tetrjs-block-l-right, .tetrjs-block-square, .tetrjs-block-s, .tetrjs-block-z, .tetrjs-block-t {
   -webkit-box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
   box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.75); }
+
+.tetrjs-block-straight {
+  background-color: #d60000;
+  border: 1px solid black; }
 
 .tetrjs-block-l-left {
   background-color: #1673de;
-  border: 1px solid black;
-  -webkit-box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
-  -moz-box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
-  box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.75); }
+  border: 1px solid black; }
 
 .tetrjs-block-l-right {
   background-color: #8d4cc2;
-  border: 1px solid black;
-  -webkit-box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
-  -moz-box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
-  box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.75); }
+  border: 1px solid black; }
 
 .tetrjs-block-square {
   background-color: orange;
-  border: 1px solid black;
-  -webkit-box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
-  -moz-box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
-  box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.75); }
+  border: 1px solid black; }
 
 .tetrjs-block-s {
   background-color: yellow;
-  border: 1px solid black;
-  -webkit-box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
-  -moz-box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
-  box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.75); }
+  border: 1px solid black; }
 
 .tetrjs-block-z {
   background-color: turquoise;
-  border: 1px solid black;
-  -webkit-box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
-  -moz-box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
-  box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.75); }
+  border: 1px solid black; }
 
 .tetrjs-block-t {
   background-color: #59c24c;
-  border: 1px solid black;
-  -webkit-box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
-  -moz-box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
-  box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.75); }
+  border: 1px solid black; }
