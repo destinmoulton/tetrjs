@@ -1,10 +1,12 @@
 var gulp = require("gulp");
-var hoganCompiler = require("gulp-hogan-precompile");
-var declare = require("gulp-declare");
+
+var babel = require("gulp-babel");
 var concat = require("gulp-concat");
-var uglify = require("gulp-uglify");
+var declare = require("gulp-declare");
 var header = require("gulp-header");
+var hoganCompiler = require("gulp-hogan-precompile");
 var sass = require("gulp-sass");
+var uglify = require("gulp-uglify");
 
 gulp.task("compile:templates", function() {
     return gulp
@@ -27,6 +29,13 @@ gulp.task("compile:sass", function() {
         .pipe(gulp.dest("dist/"));
 });
 
+gulp.task("compile:js", function() {
+    return gulp
+        .src("src/tetrjs.js")
+        .pipe(babel({ presets: ["@babel/env"] }))
+        .pipe(gulp.dest("dist"));
+});
+
 gulp.task("watch", function() {
     gulp.watch(
         "templates/**/*.mustache",
@@ -37,6 +46,11 @@ gulp.task("watch", function() {
         "src/tetrjs.scss",
         { ignoreInitial: false },
         gulp.series(["compile:sass"])
+    );
+    gulp.watch(
+        "src/tetrjs.js",
+        { ignoreInitial: false },
+        gulp.series(["compile:js"])
     );
 });
 

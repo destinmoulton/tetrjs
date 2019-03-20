@@ -34,6 +34,9 @@
     "gulp-uglify": "^3.0.2"
   },
   "dependencies": {
+    "@babel/core": "^7.4.0",
+    "@babel/preset-env": "^7.4.1",
+    "gulp-babel": "^8.0.0",
     "gulp-sass": "^4.0.2"
   }
 }
