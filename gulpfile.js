@@ -68,7 +68,7 @@ gulp.task("watch", function() {
         gulp.series(["compile:sass"])
     );
     gulp.watch(
-        "src/index.js",
+        "src/**/*.js",
         { ignoreInitial: false },
         gulp.series(["compile:js"])
     );

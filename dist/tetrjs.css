@@ -6,14 +6,16 @@
   border: 2px solid #757c87;
   font-family: Verdana, Arial, sans-serif; }
   #tetrjs-container button {
-    color: #444444;
     background: #f3f3f3;
     border: 1px #dadada solid;
-    padding: 5px 10px;
     border-radius: 2px;
-    font-weight: bold;
+    color: #444444;
     font-size: 14px;
-    outline: none; }
+    font-weight: bold;
+    line-height: 35px;
+    outline: none;
+    padding: 0 5px 0 5px;
+    vertical-align: middle; }
     #tetrjs-container button:hover {
       border: 1px #c6c6c6 solid;
       box-shadow: 1px 1px 1px #eaeaea;
@@ -144,34 +146,29 @@ table#tetrjs-gameover-table > tbody > tr > td {
 
 /** The Block Styles **/
 .tetrjs-block-straight, .tetrjs-block-l-left, .tetrjs-block-l-right, .tetrjs-block-square, .tetrjs-block-s, .tetrjs-block-z, .tetrjs-block-t {
-  -webkit-box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
-  -moz-box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
-  box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.75); }
+  -webkit-box-shadow: inset -1px -1px 4px 1px black;
+  -moz-box-shadow: inset -1px -1px 4px 1px black;
+  box-shadow: inset -1px -1px 4px 1px black;
+  border-top: 1px solid black;
+  border-left: 1px solid black; }
 
 .tetrjs-block-straight {
-  background-color: #d60000;
-  border: 1px solid black; }
+  background-color: red; }
 
 .tetrjs-block-l-left {
-  background-color: #1673de;
-  border: 1px solid black; }
+  background-color: #1673de; }
 
 .tetrjs-block-l-right {
-  background-color: #8d4cc2;
-  border: 1px solid black; }
+  background-color: #8d4cc2; }
 
 .tetrjs-block-square {
-  background-color: orange;
-  border: 1px solid black; }
+  background-color: orange; }
 
 .tetrjs-block-s {
-  background-color: yellow;
-  border: 1px solid black; }
+  background-color: yellow; }
 
 .tetrjs-block-z {
-  background-color: turquoise;
-  border: 1px solid black; }
+  background-color: turquoise; }
 
 .tetrjs-block-t {
-  background-color: #59c24c;
-  border: 1px solid black; }
+  background-color: #59c24c; }

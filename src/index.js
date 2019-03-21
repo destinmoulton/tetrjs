@@ -81,12 +81,10 @@ export default class Tetrjs {
         this.board = {};
 
         // Set the board size
-        $tetrjsBoard.style.width =
-            (SETTINGS.BOARD_COLS_WIDE * SETTINGS.CELL_WIDTH_PX).toString() +
-            "px";
-        $tetrjsBoard.style.height =
-            (SETTINGS.BOARD_ROWS_HIGH * SETTINGS.CELL_HEIGHT_PX).toString() +
-            "px";
+        const boardWidth = SETTINGS.BOARD_COLS_WIDE * SETTINGS.CELL_WIDTH_PX;
+        const boardHeight = SETTINGS.BOARD_ROWS_HIGH * SETTINGS.CELL_HEIGHT_PX;
+        $tetrjsBoard.style.width = `${boardWidth}px`;
+        $tetrjsBoard.style.height = `${boardHeight}px`;
 
         for (let i = 1; i <= SETTINGS.BOARD_ROWS_HIGH; i++) {
             this.board[i] = {};
@@ -206,7 +204,6 @@ export default class Tetrjs {
      * @return void
      */
     moveBlock(desired_direction) {
-        var self = this;
         var curr_block_no_positions =
             BLOCKS[this.currentBlock.type]["no_positions"];
         var curr_block_pos_trans_row = 0;
@@ -243,14 +240,16 @@ export default class Tetrjs {
             BLOCKS[this.currentBlock.type]["positions"][desired_position][
                 "rows"
             ];
-        $.each(curr_block_position_rows, function(row_index, row) {
-            //Loop over the columns in each row
-            $.each(row, function(col_index, col_is_active) {
-                if (col_is_active == 1) {
+        const rowKeys = Object.keys(curr_block_position_rows);
+        for (let row_index = 0; row_index < rowKeys.length; row_index++) {
+            const row = curr_block_position_rows[row_index];
+            const colKeys = Object.keys(row);
+            for (let col_index = 0; col_index < colKeys.length; col_index++) {
+                if (row[col_index] === 1) {
                     var tmp_piece_col_pos =
-                        self.currentBlock.col + parseInt(col_index);
+                        this.currentBlock.col + parseInt(col_index);
                     var tmp_piece_row_pos =
-                        self.currentBlock.row + parseInt(row_index);
+                        this.currentBlock.row + parseInt(row_index);
 
                     var tmp_piece_desired_col =
                         tmp_piece_col_pos + curr_block_pos_trans_col;
@@ -259,12 +258,12 @@ export default class Tetrjs {
 
                     if (desired_direction == "none") {
                         if (
-                            self.board[tmp_piece_desired_row][
+                            this.board[tmp_piece_desired_row][
                                 tmp_piece_desired_col
                             ].hasOwnProperty("class")
                         ) {
                             // New piece but a space is already taken
-                            self.gameOver();
+                            this.gameOver();
                         }
                     }
 
@@ -280,8 +279,8 @@ export default class Tetrjs {
                         tmp_piece_desired_row = tmp_piece_row_pos + 1;
                         if (
                             tmp_piece_desired_row >
-                                self.SETTINGS.BOARD_ROWS_HIGH ||
-                            self.board[tmp_piece_desired_row][
+                                this.SETTINGS.BOARD_ROWS_HIGH ||
+                            this.board[tmp_piece_desired_row][
                                 tmp_piece_desired_col
                             ].hasOwnProperty("class")
                         ) {
@@ -290,18 +289,18 @@ export default class Tetrjs {
                         }
                     }
 
-                    if (!self.board.hasOwnProperty(tmp_piece_desired_row)) {
+                    if (!this.board.hasOwnProperty(tmp_piece_desired_row)) {
                         //Can't move down, so error
                         error = true;
                     } else if (
-                        !self.board[tmp_piece_desired_row].hasOwnProperty(
+                        !this.board[tmp_piece_desired_row].hasOwnProperty(
                             tmp_piece_desired_col
                         )
                     ) {
                         //Off the board error out
                         error = true;
                     } else if (
-                        self.board[tmp_piece_desired_row][
+                        this.board[tmp_piece_desired_row][
                             tmp_piece_desired_col
                         ].hasOwnProperty("class")
                     ) {
@@ -323,8 +322,8 @@ export default class Tetrjs {
                         });
                     }
                 }
-            });
-        });
+            }
+        }
 
         if (!error) {
             if (!lock_current_block) {
@@ -339,28 +338,26 @@ export default class Tetrjs {
                 // Set the new current row and column
                 this.currentBlock.col = tmp_lowest_col;
                 this.currentBlock.row = tmp_lowest_row;
-                var self = this;
                 // Apply the 'movement' by modifying the block's class
-                $.each(tmp_desired_positions, function(pos_index, pos) {
-                    var tmp_id = "#tb_" + pos["col"] + "_" + pos["row"];
-                    var jTMP = $(tmp_id);
-                    jTMP.addClass(self.currentBlock.class);
-                    self.currentBlock.blockIds.push(tmp_id);
-                    self.currentBlock.blockPositions.push(pos);
-                });
+                for (let pos of tmp_desired_positions) {
+                    var tmp_id = `tb_${pos["col"]}_${pos["row"]}`;
+                    var jTMP = document.getElementById(tmp_id);
+                    jTMP.addClass(this.currentBlock.class);
+                    this.currentBlock.blockIds.push(tmp_id);
+                    this.currentBlock.blockPositions.push(pos);
+                }
             }
         }
 
         // The block has reached its final destination
         if (lock_current_block) {
-            var self = this;
-            $.each(this.currentBlock.blockPositions, function(pos_index, pos) {
+            for (let pos of this.currentBlock.blockPositions) {
                 // Lock the current block on the board
                 // by setting the permanent board class
-                self.board[pos["row"]][pos["col"]] = {
-                    class: self.currentBlock.class
+                this.board[pos["row"]][pos["col"]] = {
+                    class: this.currentBlock.class
                 };
-            });
+            }
 
             // Check if the block has caused rows to be eliminated
             this.checkAndEliminateRows();
@@ -377,7 +374,6 @@ export default class Tetrjs {
      */
     checkAndEliminateRows() {
         var no_rows_eliminated = 0;
-        var self = this;
 
         //Loop over the board rows
         $.each(this.board, function(r_index, row) {
@@ -392,19 +388,19 @@ export default class Tetrjs {
             });
 
             // The entire row is full
-            if (column_full_count == self.SETTINGS.BOARD_COLS_WIDE) {
+            if (column_full_count == this.SETTINGS.BOARD_COLS_WIDE) {
                 no_rows_eliminated++;
 
                 //Move the upper rows down, from the bottom up
                 for (var i = r_index; i >= 1; i--) {
-                    $.each(self.board[i], function(c_index, col) {
+                    $.each(this.board[i], function(c_index, col) {
                         var prev_class = "";
                         if (
-                            self.board.hasOwnProperty(i - 1) &&
-                            self.board[i - 1][c_index].hasOwnProperty("class")
+                            this.board.hasOwnProperty(i - 1) &&
+                            this.board[i - 1][c_index].hasOwnProperty("class")
                         ) {
                             // The class from the block directly above
-                            prev_class = self.board[i - 1][c_index]["class"];
+                            prev_class = this.board[i - 1][c_index]["class"];
                         }
 
                         var cur_id = "#tb_" + c_index + "_" + i;
@@ -417,10 +413,10 @@ export default class Tetrjs {
                         if (prev_class != "") {
                             //Copy down the class from above to the block in this row
                             jCur.addClass(prev_class);
-                            self.board[i][c_index] = { class: prev_class };
+                            this.board[i][c_index] = { class: prev_class };
                         } else {
                             //Blank block (no block above)
-                            self.board[i][c_index] = {};
+                            this.board[i][c_index] = {};
                         }
                     });
                 }
@@ -497,9 +493,8 @@ export default class Tetrjs {
      */
     removeCurrentBlockFromBoard() {
         //Remove the current class from the visible blocks
-        var self = this;
         $.each(this.currentBlock.blockIds, function(index, block_id) {
-            $(block_id).removeClass(self.currentBlock.class);
+            $(block_id).removeClass(this.currentBlock.class);
         });
 
         //Reset the current set of blocks
@@ -549,32 +544,31 @@ export default class Tetrjs {
      * @return void
      */
     setupKeyEvents() {
-        var self = this;
         $(document).keydown(function(e) {
             switch (e.which) {
                 case 37:
                     // Left arrow key
-                    self.moveBlock("left");
+                    this.moveBlock("left");
                     break;
 
                 case 38:
                     // Up arrow key
-                    self.moveBlock("up");
+                    this.moveBlock("up");
                     break;
 
                 case 39:
                     // Right arrow key
-                    self.moveBlock("right");
+                    this.moveBlock("right");
                     break;
 
                 case 40:
                     // Down arrow key
-                    self.moveBlock("down");
+                    this.moveBlock("down");
                     break;
 
                 case 80:
                     // 'p' pressed to pause
-                    self.pauseGame();
+                    this.pauseGame();
                     break;
 
                 // Default - don't do anything
@@ -616,12 +610,10 @@ export default class Tetrjs {
      */
     startGameInterval() {
         if (!this.gameIntervalTimer.obj) {
-            var self = this;
-
             // Setup the interval object using the std js function
             this.gameIntervalTimer.obj = setInterval(function() {
                 //Start the action (just move the current piece down)
-                self.moveBlock("down");
+                this.moveBlock("down");
             }, this.gameIntervalTimer.ms);
         }
     }
@@ -643,20 +635,19 @@ export default class Tetrjs {
      * @return void
      */
     pauseGame() {
-        var self = this;
-        if (self.isPaused) {
+        if (this.isPaused) {
             //Already paused, so start the game
-            self.startPlay();
+            this.startPlay();
             return;
         }
-        self.killGameInterval();
-        self.isPaused = true;
+        this.killGameInterval();
+        this.isPaused = true;
 
         // Show the paused modal message (from template)
-        self.showMessage("paused");
+        this.showMessage("paused");
 
         $("button#tetrjs-pause-play").click(function() {
-            self.startPlay();
+            this.startPlay();
         });
     }
 
@@ -666,22 +657,21 @@ export default class Tetrjs {
      * @return void
      */
     gameOver() {
-        var self = this;
-        self.isPaused = true;
+        this.isPaused = true;
 
         // Stop the game interval
-        self.killGameInterval();
+        this.killGameInterval();
 
         var template_vars = {
-            score: self.currentGame["score"],
-            rowsEliminated: self.currentGame["rowsEliminated"],
-            level: self.currentGame["level"]
+            score: this.currentGame["score"],
+            rowsEliminated: this.currentGame["rowsEliminated"],
+            level: this.currentGame["level"]
         };
         // Show the gameover modal message (from template)
-        self.showMessage("gameover", template_vars);
+        this.showMessage("gameover", template_vars);
 
         $("button#tetrjs-gameover-newgame").click(function() {
-            self.newGame();
+            this.newGame();
         });
     }
 
@@ -721,13 +711,12 @@ export default class Tetrjs {
      * @return void
      **/
     showIntro() {
-        var self = this;
-        self.setupBoard();
-        self.setupPreviewBoard();
+        this.setupBoard();
+        this.setupPreviewBoard();
 
-        self.showMessage("intro");
+        this.showMessage("intro");
         $("button#tetrjs-intro-newgame").click(function() {
-            self.newGame();
+            this.newGame();
         });
     }
 
@@ -737,14 +726,12 @@ export default class Tetrjs {
      * @return void
      */
     showAbout() {
-        var self = this;
+        this.killGameInterval();
+        this.isPaused = true;
 
-        self.killGameInterval();
-        self.isPaused = true;
-
-        self.showMessage("about");
+        this.showMessage("about");
         $("button#tetrjs-about-close").click(function() {
-            self.startPlay();
+            this.startPlay();
         });
     }
 
@@ -795,19 +782,18 @@ export default class Tetrjs {
      * @param string containerID The container id for tetrjs.
      */
     run(containerID) {
-        var self = this;
         $("#" + containerID).html(templates["container"].render());
 
         $("button#tetrjs-button-pause").click(function() {
-            self.pauseGame();
+            this.pauseGame();
         });
 
         $("button#tetrjs-button-new").click(function() {
-            self.newGame();
+            this.newGame();
         });
 
         $("button#tetrjs-button-about").click(function() {
-            self.showAbout();
+            this.showAbout();
         });
 
         this.setupKeyEvents();
