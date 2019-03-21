@@ -9,6 +9,8 @@
 
 import util from "./util";
 import { BLOCKS, BLOCK_TYPES } from "./blocks";
+import { SETTINGS } from "./settings";
+
 /**
  * The constructor.
  * Initializes the basic configuration values.
@@ -19,20 +21,8 @@ export default class Tetrjs {
 
     isPaused = false;
 
-    SETTINGS = {
-        BOARD_COLS_WIDE: 10,
-        BOARD_ROWS_HIGH: 18,
-        PIECE_START_COL: 4,
-        PIECE_START_ROW: 1,
-        PIECE_START_POS: 1,
-        GAME_INTERVAL_MS: 460,
-        GAME_SCORE_MULTIPLIER: 100,
-        CELL_WIDTH_PX: 20,
-        CELL_HEIGHT_PX: 20
-    };
-
     DOM_IDS = {
-        BOARD: "#tetrjs-board",
+        BOARD: "tetrjs-board",
         PREVIEW_CONTAINER: "tetrjs-next-piece-preview-container",
         SCORE_CONTAINER: "#tetrjs-score-container",
         LEVEL_CONTAINER: "#tetrjs-level-container",
@@ -49,9 +39,9 @@ export default class Tetrjs {
         blockIds: [],
         blockPositions: [],
         class: "",
-        row: this.SETTINGS.PIECE_START_ROW,
-        col: this.SETTINGS.PIECE_START_COL,
-        position: this.SETTINGS.PIECE_START_POS
+        row: SETTINGS.PIECE_START_ROW,
+        col: SETTINGS.PIECE_START_COL,
+        position: SETTINGS.PIECE_START_POS
     };
 
     previewPiece = {
@@ -62,7 +52,7 @@ export default class Tetrjs {
 
     gameIntervalTimer = {
         obj: false,
-        ms: this.SETTINGS.GAME_INTERVAL_MS
+        ms: SETTINGS.GAME_INTERVAL_MS
     };
 
     currentGame = {
@@ -84,44 +74,37 @@ export default class Tetrjs {
      * @return void
      */
     setupBoard() {
-        var $tetrjsBoard = $(this.DOM_IDS.BOARD);
+        const $tetrjsBoard = document.getElementById(this.DOM_IDS.BOARD);
 
         // Clear the board
-        $tetrjsBoard.html("");
+        $tetrjsBoard.innerHTML = "";
         this.board = {};
 
         // Set the board size
-        $tetrjsBoard.width(
-            this.SETTINGS.BOARD_COLS_WIDE * this.SETTINGS.CELL_WIDTH_PX
-        );
-        $tetrjsBoard.height(
-            this.SETTINGS.BOARD_ROWS_HIGH * this.SETTINGS.CELL_HEIGHT_PX
-        );
+        $tetrjsBoard.style.width =
+            (SETTINGS.BOARD_COLS_WIDE * SETTINGS.CELL_WIDTH_PX).toString() +
+            "px";
+        $tetrjsBoard.style.height =
+            (SETTINGS.BOARD_ROWS_HIGH * SETTINGS.CELL_HEIGHT_PX).toString() +
+            "px";
 
-        for (let i = 1; i <= this.SETTINGS.BOARD_ROWS_HIGH; i++) {
+        for (let i = 1; i <= SETTINGS.BOARD_ROWS_HIGH; i++) {
             this.board[i] = {};
-            var top_pos = (i - 1) * this.SETTINGS.CELL_HEIGHT_PX;
-            for (let j = 1; j <= this.SETTINGS.BOARD_COLS_WIDE; j++) {
+            const top_pos = (i - 1) * SETTINGS.CELL_HEIGHT_PX;
+            for (let j = 1; j <= SETTINGS.BOARD_COLS_WIDE; j++) {
                 // Setup the object for storing block positions
                 this.board[i][j] = {};
 
                 // Calculate left px position of the cell
-                var left_pos = (j - 1) * this.SETTINGS.CELL_WIDTH_PX;
+                const left_pos = (j - 1) * SETTINGS.CELL_WIDTH_PX;
 
                 // Add the block to the board
-                var tmp_pos =
-                    " style='left:" + left_pos + "px; top:" + top_pos + "px;' ";
-                var tmp_div =
-                    "<div class='" +
-                    this.DOM_CLASSES.BOARD_BLOCK +
-                    "' id='tb_" +
-                    j +
-                    "_" +
-                    i +
-                    "' " +
-                    tmp_pos +
-                    "></div>";
-                $tetrjsBoard.append(tmp_div);
+                const block = document.createElement("div");
+                block.style.left = left_pos.toString() + "px";
+                block.style.top = top_pos.toString() + "px";
+                block.className = this.DOM_CLASSES.BOARD_BLOCK;
+                block.setAttribute("id", `tb_${j}_${i}`);
+                $tetrjsBoard.appendChild(block);
             }
         }
     }
@@ -142,18 +125,16 @@ export default class Tetrjs {
         var preview_sections_high = 4;
 
         // Clear the board
+        const boardWidth = preview_sections_wide * SETTINGS.CELL_WIDTH_PX;
+        const boardHeight = preview_sections_high * SETTINGS.CELL_HEIGHT_PX;
         $previewBoard.innerHTML = "";
-        $previewBoard.style.width =
-            (preview_sections_wide * this.SETTINGS.CELL_WIDTH_PX).toString() +
-            "px";
-        $previewBoard.style.height =
-            (preview_sections_high * this.SETTINGS.CELL_HEIGHT_PX).toString() +
-            "px";
+        $previewBoard.style.width = `${boardWidth}px`;
+        $previewBoard.style.height = `${boardHeight}px`;
 
         for (let i = 1; i <= preview_sections_high; i++) {
-            var top_pos = (i - 1) * this.SETTINGS.CELL_HEIGHT_PX;
+            var top_pos = (i - 1) * SETTINGS.CELL_HEIGHT_PX;
             for (let j = 1; j <= preview_sections_wide; j++) {
-                var left_pos = (j - 1) * this.SETTINGS.CELL_WIDTH_PX;
+                var left_pos = (j - 1) * SETTINGS.CELL_WIDTH_PX;
                 let block = document.createElement("div");
                 block.style.top = top_pos + "px";
                 block.style.left = left_pos + "px";
@@ -254,8 +235,8 @@ export default class Tetrjs {
 
         var tmp_desired_positions = [];
         var lock_current_block = false;
-        var tmp_lowest_col = this.SETTINGS.BOARD_COLS_WIDE;
-        var tmp_lowest_row = this.SETTINGS.BOARD_ROWS_HIGH;
+        var tmp_lowest_col = SETTINGS.BOARD_COLS_WIDE;
+        var tmp_lowest_row = SETTINGS.BOARD_ROWS_HIGH;
 
         var error = false;
         var curr_block_position_rows =
@@ -461,7 +442,7 @@ export default class Tetrjs {
     score(no_rows_eliminated) {
         var multiple_row_bonus = 0;
         var current_multiplier =
-            this.SETTINGS.GAME_SCORE_MULTIPLIER * this.currentGame.level;
+            SETTINGS.GAME_SCORE_MULTIPLIER * this.currentGame.level;
 
         this.currentGame.rowsEliminated =
             this.currentGame.rowsEliminated + no_rows_eliminated;
@@ -478,7 +459,7 @@ export default class Tetrjs {
 
         this.setScoreText();
 
-        if (this.currentGame.rowsEliminated == this.SETTINGS.BOARD_ROWS_HIGH) {
+        if (this.currentGame.rowsEliminated == SETTINGS.BOARD_ROWS_HIGH) {
             // Level up
             this.currentGame.rowsEliminated = 0;
 
@@ -546,7 +527,7 @@ export default class Tetrjs {
 
         // Reset the start location for the block to appear
         this.currentBlock.row = 1;
-        this.currentBlock.col = this.SETTINGS.PIECE_START_COL;
+        this.currentBlock.col = SETTINGS.PIECE_START_COL;
 
         this.currentBlock.position = 0;
 
@@ -716,7 +697,7 @@ export default class Tetrjs {
         // Reset the the score, level, and interval
         this.currentGame.score = 0;
         this.currentGame.level = 1;
-        this.gameIntervalTimer.ms = this.SETTINGS.GAME_INTERVAL_MS;
+        this.gameIntervalTimer.ms = SETTINGS.GAME_INTERVAL_MS;
 
         // Reset the score and level text
         this.setScoreText();
