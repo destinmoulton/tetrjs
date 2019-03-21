@@ -178,17 +178,15 @@ export default class Tetrjs {
      *
      * @return void
      */
-    makePreviewBlock() {
+    makePreviewPiece() {
         if (this.isPaused) {
             return;
         }
 
         //Remove the current block from the preview
         for (let block_id of this.previewPiece.blocks) {
-            util.removeClass(
-                document.getElementById(block_id),
-                this.previewPiece.class
-            );
+            const block = document.getElementById(block_id);
+            util.removeClass(block, this.previewPiece.class);
         }
         this.previewPiece.blocks = [];
 
@@ -196,18 +194,21 @@ export default class Tetrjs {
         this.previewPiece.type = this.generateRandomBlockType();
 
         this.previewPiece.class = BLOCKS[this.previewPiece.type]["class"];
-        var start_col = 2;
-        var start_row = 2;
-        var curr_block_position_rows =
+        const start_col = 2;
+        const start_row = 2;
+        const curr_block_position_rows =
             BLOCKS[this.previewPiece.type]["positions"][0]["rows"];
-        for (let i = 0; i <= curr_block_position_rows.length; i++) {
-            const row = curr_block_position_rows[i];
-            for (let j = 0; j < row.length; j++) {
-                const col_is_active = row[j];
-                if (col_is_active === 1) {
-                    var block_col = start_col + parseInt(j);
-                    var block_row = start_row + parseInt(i);
-                    var id = "tp_" + block_col + "_" + block_row;
+
+        // Rows are stored as an object-matrix
+        const row_keys = Object.keys(curr_block_position_rows);
+        for (let row_index of row_keys) {
+            const row = curr_block_position_rows[row_index];
+            const col_keys = Object.keys(row);
+            for (let col_index of col_keys) {
+                if (row[col_index] === 1) {
+                    const block_col = start_col + parseInt(col_index);
+                    const block_row = start_row + parseInt(row_index);
+                    const id = "tp_" + block_col + "_" + block_row;
                     const el = document.getElementById(id);
                     util.addClass(el, this.previewPiece.class);
 
@@ -556,7 +557,7 @@ export default class Tetrjs {
         this.startGameInterval();
 
         // Make the next preview block
-        this.makePreviewBlock();
+        this.makePreviewPiece();
     }
 
     /**
