@@ -278,8 +278,7 @@ export default class Tetrjs {
                     if (desired_direction == "down") {
                         tmp_piece_desired_row = tmp_piece_row_pos + 1;
                         if (
-                            tmp_piece_desired_row >
-                                this.SETTINGS.BOARD_ROWS_HIGH ||
+                            tmp_piece_desired_row > SETTINGS.BOARD_ROWS_HIGH ||
                             this.board[tmp_piece_desired_row][
                                 tmp_piece_desired_col
                             ].hasOwnProperty("class")
@@ -342,7 +341,7 @@ export default class Tetrjs {
                 for (let pos of tmp_desired_positions) {
                     var tmp_id = `tb_${pos["col"]}_${pos["row"]}`;
                     var jTMP = document.getElementById(tmp_id);
-                    jTMP.addClass(this.currentBlock.class);
+                    util.addClass(jTMP, this.currentBlock.class);
                     this.currentBlock.blockIds.push(tmp_id);
                     this.currentBlock.blockPositions.push(pos);
                 }
@@ -388,7 +387,7 @@ export default class Tetrjs {
             });
 
             // The entire row is full
-            if (column_full_count == this.SETTINGS.BOARD_COLS_WIDE) {
+            if (column_full_count === SETTINGS.BOARD_COLS_WIDE) {
                 no_rows_eliminated++;
 
                 //Move the upper rows down, from the bottom up
@@ -493,9 +492,10 @@ export default class Tetrjs {
      */
     removeCurrentBlockFromBoard() {
         //Remove the current class from the visible blocks
-        $.each(this.currentBlock.blockIds, function(index, block_id) {
-            $(block_id).removeClass(this.currentBlock.class);
-        });
+        for (let block_id of this.currentBlock.blockIds) {
+            const block = document.getElementById(block_id);
+            util.removeClass(block, this.currentBlock.class);
+        }
 
         //Reset the current set of blocks
         this.currentBlock.blockIds = [];
@@ -611,7 +611,7 @@ export default class Tetrjs {
     startGameInterval() {
         if (!this.gameIntervalTimer.obj) {
             // Setup the interval object using the std js function
-            this.gameIntervalTimer.obj = setInterval(function() {
+            this.gameIntervalTimer.obj = setInterval(() => {
                 //Start the action (just move the current piece down)
                 this.moveBlock("down");
             }, this.gameIntervalTimer.ms);
@@ -645,8 +645,8 @@ export default class Tetrjs {
 
         // Show the paused modal message (from template)
         this.showMessage("paused");
-
-        $("button#tetrjs-pause-play").click(function() {
+        const button = document.getElementById("tetrjs-pause-play");
+        button.addEventListener("click", ev => {
             this.startPlay();
         });
     }
@@ -669,8 +669,8 @@ export default class Tetrjs {
         };
         // Show the gameover modal message (from template)
         this.showMessage("gameover", template_vars);
-
-        $("button#tetrjs-gameover-newgame").click(function() {
+        const button = document.getElementById("tetrjs-gameover-newgame");
+        button.addEventListener("click", e => {
             this.newGame();
         });
     }
@@ -715,7 +715,8 @@ export default class Tetrjs {
         this.setupPreviewBoard();
 
         this.showMessage("intro");
-        $("button#tetrjs-intro-newgame").click(function() {
+        const button = document.getElementById("tetrjs-intro-newgame");
+        button.addEventListener("click", e => {
             this.newGame();
         });
     }
@@ -730,7 +731,8 @@ export default class Tetrjs {
         this.isPaused = true;
 
         this.showMessage("about");
-        $("button#tetrjs-about-close").click(function() {
+        const button = document.getElementById("tetrjs-about-close");
+        button.addEventListener("click", e => {
             this.startPlay();
         });
     }
@@ -782,17 +784,21 @@ export default class Tetrjs {
      * @param string containerID The container id for tetrjs.
      */
     run(containerID) {
-        $("#" + containerID).html(templates["container"].render());
+        const el = document.getElementById(containerID);
+        el.innerHTML = templates["container"].render();
 
-        $("button#tetrjs-button-pause").click(function() {
+        const button = document.getElementById("tetrjs-button-pause");
+        button.addEventListener("click", e => {
             this.pauseGame();
         });
 
-        $("button#tetrjs-button-new").click(function() {
+        const newButton = document.getElementById("tetrjs-button-new");
+        newButton.addEventListener("click", e => {
             this.newGame();
         });
 
-        $("button#tetrjs-button-about").click(function() {
+        const about = document.getElementById("tetrjs-button-about");
+        about.addEventListener("click", e => {
             this.showAbout();
         });
 
