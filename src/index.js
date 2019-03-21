@@ -184,11 +184,12 @@ export default class Tetrjs {
         }
 
         //Remove the current block from the preview
-        var self = this;
-        $.each(this.previewPiece.blocks, function(index, block_id) {
-            util.removeClass();
-            $(block_id).removeClass(self.previewPiece.class);
-        });
+        for (let block_id of this.previewPiece.blocks) {
+            util.removeClass(
+                document.getElementById(block_id),
+                this.previewPiece.class
+            );
+        }
         this.previewPiece.blocks = [];
 
         //Get a random block
@@ -199,18 +200,21 @@ export default class Tetrjs {
         var start_row = 2;
         var curr_block_position_rows =
             BLOCKS[this.previewPiece.type]["positions"][0]["rows"];
-        $.each(curr_block_position_rows, function(row_index, row) {
-            $.each(row, function(col_index, col_is_active) {
-                if (col_is_active == 1) {
-                    var block_col = start_col + parseInt(col_index);
-                    var block_row = start_row + parseInt(row_index);
-                    var id = "#tp_" + block_col + "_" + block_row;
-                    $(id).addClass(self.previewPiece.class);
+        for (let i = 0; i <= curr_block_position_rows.length; i++) {
+            const row = curr_block_position_rows[i];
+            for (let j = 0; j < row.length; j++) {
+                const col_is_active = row[j];
+                if (col_is_active === 1) {
+                    var block_col = start_col + parseInt(j);
+                    var block_row = start_row + parseInt(i);
+                    var id = "tp_" + block_col + "_" + block_row;
+                    const el = document.getElementById(id);
+                    util.addClass(el, this.previewPiece.class);
 
-                    self.previewPiece.blocks.push(id);
+                    this.previewPiece.blocks.push(id);
                 }
-            });
-        });
+            }
+        }
     }
 
     /**
