@@ -24,7 +24,7 @@ export default class Tetrjs {
     DOM_IDS = {
         BOARD: "tetrjs-board",
         PREVIEW_CONTAINER: "tetrjs-next-piece-preview-container",
-        SCORE_CONTAINER: "#tetrjs-score-container",
+        SCORE_CONTAINER: "tetrjs-score-container",
         LEVEL_CONTAINER: "tetrjs-level-container",
         MODAL: "tetrjs-modal",
         MODAL_VEIL: "tetrjs-modal-veil"
@@ -74,17 +74,17 @@ export default class Tetrjs {
      * @return void
      */
     setupBoard() {
-        const $tetrjsBoard = document.getElementById(this.DOM_IDS.BOARD);
+        const elBoard = document.getElementById(this.DOM_IDS.BOARD);
 
         // Clear the board
-        $tetrjsBoard.innerHTML = "";
+        elBoard.innerHTML = "";
         this.board = {};
 
         // Set the board size
         const boardWidth = SETTINGS.BOARD_COLS_WIDE * SETTINGS.CELL_WIDTH_PX;
         const boardHeight = SETTINGS.BOARD_ROWS_HIGH * SETTINGS.CELL_HEIGHT_PX;
-        $tetrjsBoard.style.width = `${boardWidth}px`;
-        $tetrjsBoard.style.height = `${boardHeight}px`;
+        elBoard.style.width = `${boardWidth}px`;
+        elBoard.style.height = `${boardHeight}px`;
 
         for (let i = 1; i <= SETTINGS.BOARD_ROWS_HIGH; i++) {
             this.board[i] = {};
@@ -102,7 +102,7 @@ export default class Tetrjs {
                 block.style.top = top_pos.toString() + "px";
                 block.className = this.DOM_CLASSES.BOARD_BLOCK;
                 block.setAttribute("id", `tb_${j}_${i}`);
-                $tetrjsBoard.appendChild(block);
+                elBoard.appendChild(block);
             }
         }
     }
@@ -116,29 +116,29 @@ export default class Tetrjs {
      * @return void
      */
     setupPreviewBoard() {
-        var $previewBoard = document.getElementById(
+        const elPreviewBoard = document.getElementById(
             this.DOM_IDS.PREVIEW_CONTAINER
         );
-        var preview_sections_wide = 6;
-        var preview_sections_high = 4;
+        const preview_sections_wide = 6;
+        const preview_sections_high = 4;
 
         // Clear the board
         const boardWidth = preview_sections_wide * SETTINGS.CELL_WIDTH_PX;
         const boardHeight = preview_sections_high * SETTINGS.CELL_HEIGHT_PX;
-        $previewBoard.innerHTML = "";
-        $previewBoard.style.width = `${boardWidth}px`;
-        $previewBoard.style.height = `${boardHeight}px`;
+        elPreviewBoard.innerHTML = "";
+        elPreviewBoard.style.width = `${boardWidth}px`;
+        elPreviewBoard.style.height = `${boardHeight}px`;
 
         for (let i = 1; i <= preview_sections_high; i++) {
-            var top_pos = (i - 1) * SETTINGS.CELL_HEIGHT_PX;
+            const top_pos = (i - 1) * SETTINGS.CELL_HEIGHT_PX;
             for (let j = 1; j <= preview_sections_wide; j++) {
-                var left_pos = (j - 1) * SETTINGS.CELL_WIDTH_PX;
+                const left_pos = (j - 1) * SETTINGS.CELL_WIDTH_PX;
                 let block = document.createElement("div");
                 block.style.top = top_pos + "px";
                 block.style.left = left_pos + "px";
                 block.className = this.DOM_CLASSES.BOARD_BLOCK;
                 block.setAttribute("id", `tp_${j}_${i}`);
-                $previewBoard.appendChild(block);
+                elPreviewBoard.appendChild(block);
             }
         }
     }
@@ -204,11 +204,11 @@ export default class Tetrjs {
      * @return void
      */
     moveBlock(desired_direction) {
-        var curr_block_no_positions =
+        const curr_block_no_positions =
             BLOCKS[this.currentBlock.type]["no_positions"];
-        var curr_block_pos_trans_row = 0;
-        var curr_block_pos_trans_col = 0;
-        var desired_position = this.currentBlock.position;
+        let curr_block_pos_trans_row = 0;
+        let curr_block_pos_trans_col = 0;
+        let desired_position = this.currentBlock.position;
 
         // 'up' rotates the block
         if (desired_direction == "up") {
@@ -230,13 +230,13 @@ export default class Tetrjs {
                 ];
         }
 
-        var tmp_desired_positions = [];
-        var lock_current_block = false;
-        var tmp_lowest_col = SETTINGS.BOARD_COLS_WIDE;
-        var tmp_lowest_row = SETTINGS.BOARD_ROWS_HIGH;
+        let tmp_desired_positions = [];
+        let lock_current_block = false;
+        let tmp_lowest_col = SETTINGS.BOARD_COLS_WIDE;
+        let tmp_lowest_row = SETTINGS.BOARD_ROWS_HIGH;
 
-        var error = false;
-        var curr_block_position_rows =
+        let error = false;
+        const curr_block_position_rows =
             BLOCKS[this.currentBlock.type]["positions"][desired_position][
                 "rows"
             ];
@@ -246,14 +246,14 @@ export default class Tetrjs {
             const colKeys = Object.keys(row);
             for (let col_index = 0; col_index < colKeys.length; col_index++) {
                 if (row[col_index] === 1) {
-                    var tmp_piece_col_pos =
+                    const tmp_piece_col_pos =
                         this.currentBlock.col + parseInt(col_index);
-                    var tmp_piece_row_pos =
+                    const tmp_piece_row_pos =
                         this.currentBlock.row + parseInt(row_index);
 
-                    var tmp_piece_desired_col =
+                    let tmp_piece_desired_col =
                         tmp_piece_col_pos + curr_block_pos_trans_col;
-                    var tmp_piece_desired_row =
+                    let tmp_piece_desired_row =
                         tmp_piece_row_pos + curr_block_pos_trans_row;
 
                     if (desired_direction == "none") {
@@ -372,13 +372,13 @@ export default class Tetrjs {
      * @return void
      */
     checkAndEliminateRows() {
-        var no_rows_eliminated = 0;
+        let no_rows_eliminated = 0;
 
         //Loop over the board rows
         const rowKeys = Object.keys(this.board);
         for (let r_index of rowKeys) {
             const row = this.board[r_index];
-            var column_full_count = 0;
+            let column_full_count = 0;
 
             //Loop over the columns in this row
             const colKeys = Object.keys(row);
@@ -395,11 +395,11 @@ export default class Tetrjs {
                 no_rows_eliminated++;
 
                 //Move the upper rows down, from the bottom up
-                for (var i = r_index; i >= 1; i--) {
+                for (let i = r_index; i >= 1; i--) {
                     const colKeys = Object.keys(this.board[i]);
                     for (let c_index of colKeys) {
                         const col = row[c_index];
-                        var prev_class = "";
+                        let prev_class = "";
                         if (
                             this.board.hasOwnProperty(i - 1) &&
                             this.board[i - 1][c_index].hasOwnProperty("class")
@@ -408,7 +408,7 @@ export default class Tetrjs {
                             prev_class = this.board[i - 1][c_index]["class"];
                         }
 
-                        var jCur = document.getElementById(
+                        const jCur = document.getElementById(
                             `tb_${c_index}_${i}`
                         );
 
@@ -442,8 +442,8 @@ export default class Tetrjs {
      * @return void
      */
     score(no_rows_eliminated) {
-        var multiple_row_bonus = 0;
-        var current_multiplier =
+        let multiple_row_bonus = 0;
+        let current_multiplier =
             SETTINGS.GAME_SCORE_MULTIPLIER * this.currentGame.level;
 
         this.currentGame.rowsEliminated =
@@ -480,7 +480,9 @@ export default class Tetrjs {
      * @return void
      */
     setScoreText() {
-        $(this.DOM_IDS.SCORE_CONTAINER).text(this.currentGame.score);
+        document.getElementById(
+            this.DOM_IDS.SCORE_CONTAINER
+        ).innerText = this.currentGame.score;
     }
 
     /**
@@ -751,26 +753,26 @@ export default class Tetrjs {
      * @return void
      */
     showMessage(template_name, vars) {
-        var $modal = document.getElementById(this.DOM_IDS.MODAL);
-        var $veil = document.getElementById(this.DOM_IDS.MODAL_VEIL);
+        const elModal = document.getElementById(this.DOM_IDS.MODAL);
+        const elVeil = document.getElementById(this.DOM_IDS.MODAL_VEIL);
 
-        var html = templates[template_name].render(vars);
+        const html = templates[template_name].render(vars);
 
-        $modal.innerHTML = html;
+        elModal.innerHTML = html;
 
         //Center the message in the veil
-        var leftOffset = Math.floor(
-            ($veil.style.width - util.outerWidth($modal)) / 2
+        const leftOffset = Math.floor(
+            (elVeil.style.width - util.outerWidth(elModal)) / 2
         );
-        var topOffset = Math.floor(
-            ($veil.style.height - util.outerHeight($modal)) / 2
+        const topOffset = Math.floor(
+            (elVeil.style.height - util.outerHeight(elModal)) / 2
         );
 
-        $modal.style.left = leftOffset + "px";
-        $modal.style.top = topOffset + "px";
+        elModal.style.left = leftOffset + "px";
+        elModal.style.top = topOffset + "px";
 
-        util.fadeIn($veil, () => {});
-        util.fadeIn($modal, () => {});
+        util.fadeIn(elVeil, () => {});
+        util.fadeIn(elModal, () => {});
     }
 
     /**
@@ -779,13 +781,13 @@ export default class Tetrjs {
      * @return void
      */
     hideMessage() {
-        var $modal = document.getElementById(this.DOM_IDS.MODAL);
-        var $veil = document.getElementById(this.DOM_IDS.MODAL_VEIL);
-        util.fadeOut($modal, () => {
+        var elModal = document.getElementById(this.DOM_IDS.MODAL);
+        var elVeil = document.getElementById(this.DOM_IDS.MODAL_VEIL);
+        util.fadeOut(elModal, () => {
             //Clear after the fade
-            $modal.innerHTML = "";
+            elModal.innerHTML = "";
         });
-        util.fadeOut($veil, () => {});
+        util.fadeOut(elVeil, () => {});
     }
 
     /**
