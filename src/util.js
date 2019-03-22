@@ -31,23 +31,42 @@ function removeClass(ele, cls) {
     }
 }
 
-function fadeIn(el, time, cb) {
-    el.style.opacity = 0;
-
-    var last = +new Date();
-    var tick = function() {
-        el.style.opacity = +el.style.opacity + (new Date() - last) / time;
-        last = +new Date();
-
-        if (+el.style.opacity < 1) {
-            (window.requestAnimationFrame && requestAnimationFrame(tick)) ||
-                setTimeout(tick, 16);
-        } else {
+/**
+ * https://stackoverflow.com/a/6121270
+ * @param {HTMLElement} element
+ * @param {function} cb
+ */
+function fadeIn(element, cb) {
+    var op = 0.1; // initial opacity
+    element.style.display = "block";
+    var timer = setInterval(function() {
+        if (op >= 1) {
+            clearInterval(timer);
             return cb();
         }
-    };
+        element.style.opacity = op;
+        element.style.filter = "alpha(opacity=" + op * 100 + ")";
+        op += op * 0.1;
+    }, 10);
+}
 
-    tick();
+/**
+ * https://stackoverflow.com/a/6121270
+ * @param {HTMLElement} element
+ * @param {function} cb
+ */
+function fadeOut(element, cb) {
+    var op = 1; // initial opacity
+    var timer = setInterval(function() {
+        if (op <= 0.1) {
+            clearInterval(timer);
+            element.style.display = "none";
+            return cb();
+        }
+        element.style.opacity = op;
+        element.style.filter = "alpha(opacity=" + op * 100 + ")";
+        op -= op * 0.1;
+    }, 10);
 }
 
 /**
@@ -86,6 +105,7 @@ export default {
     addClass,
     removeClass,
     fadeIn,
+    fadeOut,
     outerHeight,
     outerWidth
 };
