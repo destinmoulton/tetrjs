@@ -9,7 +9,6 @@
         <link rel="stylesheet" type="text/css" href="dist/tetrjs.css">
 
         <!-- Required Javascript Libraries -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
         <script src="https://twitter.github.com/hogan.js/builds/3.0.1/hogan-3.0.1.js"></script>
 
         <!-- The Tetrjs Game Logic -->
@@ -17,12 +16,12 @@
         <script src="dist/tetrjs.js"></script>
 
         <script>
-            $(function () {
+            window.onload = function () {
                 // Create an instance of Tetrjs
                 var tetrjs = new Tetrjs();
                 // Run Tetrjs
                 tetrjs.run('tetrjs-wrapper');
-            });
+            };
         </script>
 
         <!--[if IE]> <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script> <![endif]-->
