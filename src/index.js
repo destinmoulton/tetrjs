@@ -430,7 +430,7 @@ export default class Tetrjs {
         }
 
         if (no_rows_eliminated > 0) {
-            // Give the user their score
+            // Update the score
             this.score(no_rows_eliminated);
         }
     }
@@ -760,19 +760,21 @@ export default class Tetrjs {
 
         elModal.innerHTML = html;
 
-        //Center the message in the veil
-        const leftOffset = Math.floor(
-            (elVeil.style.width - util.outerWidth(elModal)) / 2
-        );
-        const topOffset = Math.floor(
-            (elVeil.style.height - util.outerHeight(elModal)) / 2
-        );
+        util.fadeIn(elVeil, () => {
+            elModal.style.opacity = 0;
+            elModal.style.display = "block";
+            //Center the message in the veil
+            const leftOffset = Math.floor(
+                (elVeil.offsetWidth - elModal.offsetWidth) / 2
+            );
+            const topOffset = Math.floor(
+                (elVeil.offsetHeight - elModal.offsetHeight) / 2
+            );
 
-        elModal.style.left = leftOffset + "px";
-        elModal.style.top = topOffset + "px";
-
-        util.fadeIn(elVeil, () => {});
-        util.fadeIn(elModal, () => {});
+            elModal.style.left = leftOffset + "px";
+            elModal.style.top = topOffset + "px";
+            elModal.style.opacity = 1;
+        });
     }
 
     /**

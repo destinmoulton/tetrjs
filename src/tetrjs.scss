@@ -1,12 +1,14 @@
 $font-family: Verdana,
 Arial,
 sans-serif;
+$container-width: 375px;
+$container-height: 475px;
 /** The Main Tetrjs Box **/
 
 #tetrjs-container {
     position: relative;
-    width: 375px;
-    height: 425px;
+    width: $container-width;
+    height: $container-height;
     border: 2px solid #757c87;
     font-family: $font-family;
     button {
@@ -143,22 +145,25 @@ $arrow-height: 35px;
 /** The Modal Popover Style **/
 
 #tetrjs-modal {
-    position: absolute;
-    display: none;
-    top: 110px;
-    left: 45px;
-    text-align: center;
-    padding: 15px 10px 15px 10px;
-    border: 3px solid #7098b5;
     background-color: white;
+    border: 3px solid #7098b5;
+    display: none;
+    left: 45px;
+    max-width: 300px;
+    min-width: 150px;
+    opacity: 1;
+    padding: 15px 10px 15px 10px;
+    position: absolute;
+    text-align: center;
+    top: 110px;
     z-index: 99;
 }
 
 #tetrjs-modal-veil {
     position: absolute;
     display: none;
-    width: 100%;
-    height: 100%;
+    width: $container-width;
+    height: $container-height;
     opacity: 0.6;
     background-color: black;
     z-index: 10;
