@@ -69,37 +69,6 @@ function fadeOut(element, cb) {
     }, 10);
 }
 
-/**
- * Computer the outer height of an element.
- *
- * Source: https://stackoverflow.com/a/47536372
- * @param {HTMLElement} el
- */
-function outerHeight(el) {
-    let style = window.getComputedStyle(el);
-    return [
-        "height",
-        "padding-top",
-        "padding-bottom",
-        "margin-top",
-        "margin-bottom"
-    ]
-        .map(key => parseInt(style.getPropertyValue(key), 10))
-        .reduce((prev, cur) => prev + cur);
-}
-
-function outerWidth(el) {
-    let style = window.getComputedStyle(el);
-    return [
-        "width",
-        "padding-left",
-        "padding-right",
-        "margin-left",
-        "margin-right"
-    ]
-        .map(key => parseInt(style.getPropertyValue(key), 10))
-        .reduce((prev, cur) => prev + cur);
-}
 export default {
     hasClass,
     addClass,
