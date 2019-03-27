@@ -17,7 +17,7 @@ import { SETTINGS } from "./settings";
  * @return void
  */
 export default class Tetrjs {
-    board = {};
+    board = [];
 
     isPaused = false;
 
@@ -87,7 +87,7 @@ export default class Tetrjs {
         elBoard.style.height = `${boardHeight}px`;
 
         for (let i = 1; i <= SETTINGS.BOARD_ROWS_HIGH; i++) {
-            this.board[i] = {};
+            this.board[i] = [];
             const top_pos = (i - 1) * SETTINGS.CELL_HEIGHT_PX;
             for (let j = 1; j <= SETTINGS.BOARD_COLS_WIDE; j++) {
                 // Setup the object for storing block positions
@@ -173,21 +173,19 @@ export default class Tetrjs {
         this.previewPiece.type = this.generateRandomBlockType();
 
         this.previewPiece.class = BLOCKS[this.previewPiece.type]["class"];
-        const start_col = 2;
-        const start_row = 2;
-        const curr_block_position_rows =
+        const startCol = 2;
+        const startRow = 2;
+        const blockRows =
             BLOCKS[this.previewPiece.type]["positions"][0]["rows"];
 
-        // Rows are stored as an object-matrix
-        const row_keys = Object.keys(curr_block_position_rows);
-        for (let row_index of row_keys) {
-            const row = curr_block_position_rows[row_index];
-            const col_keys = Object.keys(row);
-            for (let col_index of col_keys) {
-                if (row[col_index] === 1) {
-                    const block_col = start_col + parseInt(col_index);
-                    const block_row = start_row + parseInt(row_index);
-                    const id = "tp_" + block_col + "_" + block_row;
+        // Rows are stored as a matrix
+        for (let rowIndex = 0; rowIndex < blockRows.length; rowIndex++) {
+            const row = blockRows[rowIndex];
+            for (let colIndex = 0; colIndex < row.length; colIndex++) {
+                if (row[colIndex] === 1) {
+                    const blockCol = startCol + colIndex;
+                    const blockRow = startRow + rowIndex;
+                    const id = "tp_" + blockCol + "_" + blockRow;
                     const el = document.getElementById(id);
                     util.addClass(el, this.previewPiece.class);
 
