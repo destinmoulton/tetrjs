@@ -28,210 +28,144 @@ const BLOCKS = {
     STRAIGHT: {
         class: "tetrjs-block-straight",
         no_positions: 2,
-        positions: {
-            0: {
+        positions: [
+            {
                 trans_row: 1,
                 trans_col: -1,
-                rows: {
-                    "0": { 0: 1, 1: 1, 2: 1, 3: 1 }
-                }
+                rows: [[1, 1, 1, 1]]
             },
-            1: {
+            {
                 trans_row: -1,
                 trans_col: 1,
-                rows: {
-                    "0": { 0: 1 },
-                    "1": { 0: 1 },
-                    "2": { 0: 1 },
-                    "3": { 0: 1 }
-                }
+                rows: [[1], [1], [1], [1]]
             }
-        }
+        ]
     },
     L_LEFT: {
         class: "tetrjs-block-l-left",
         no_positions: 4,
-        positions: {
-            0: {
+        positions: [
+            {
                 trans_row: 1,
                 trans_col: -1,
-                rows: {
-                    "0": { 0: 1, 1: 1, 2: 1 },
-                    "1": { 0: 0, 1: 0, 2: 1 }
-                }
+                rows: [[1, 1, 1], [0, 0, 1]]
             },
-            1: {
+            {
                 trans_row: -1,
                 trans_col: 0,
-                rows: {
-                    "0": { 0: 0, 1: 1 },
-                    "1": { 0: 0, 1: 1 },
-                    "2": { 0: 1, 1: 1 }
-                }
+                rows: [[0, 1], [0, 1], [1, 1]]
             },
-            2: {
+            {
                 trans_row: 0,
                 trans_col: 0,
-                rows: {
-                    "0": { 0: 1, 1: 0, 2: 0 },
-                    "1": { 0: 1, 1: 1, 2: 1 }
-                }
+                rows: [[1, 0, 0], [1, 1, 1]]
             },
-            3: {
+            {
                 trans_row: 0,
                 trans_col: 1,
-                rows: {
-                    "0": { 0: 1, 1: 1 },
-                    "1": { 0: 1, 1: 0 },
-                    "2": { 0: 1, 1: 0 }
-                }
+                rows: [[1, 1], [1, 0], [1, 0]]
             }
-        }
+        ]
     },
 
     L_RIGHT: {
         class: "tetrjs-block-l-right",
         no_positions: 4,
-        positions: {
-            0: {
+        positions: [
+            {
                 trans_row: 1,
                 trans_col: -1,
-                rows: {
-                    "0": { 0: 1, 1: 1, 2: 1 },
-                    "1": { 0: 1, 1: 0, 2: 0 }
-                }
+                rows: [[1, 1, 1], [1, 0, 0]]
             },
-            1: {
+            {
                 trans_row: -1,
                 trans_col: 0,
-                rows: {
-                    "0": { 0: 1, 1: 1 },
-                    "1": { 0: 0, 1: 1 },
-                    "2": { 0: 0, 1: 1 }
-                }
+                rows: [[1, 1], [0, 1], [0, 1]]
             },
-            2: {
+            {
                 trans_row: 0,
                 trans_col: 0,
-                rows: {
-                    "0": { 0: 0, 1: 0, 2: 1 },
-                    "1": { 0: 1, 1: 1, 2: 1 }
-                }
+                rows: [[0, 0, 1], [1, 1, 1]]
             },
-            3: {
+            {
                 trans_row: 0,
                 trans_col: 1,
-                rows: {
-                    "0": { 0: 1, 1: 0 },
-                    "1": { 0: 1, 1: 0 },
-                    "2": { 0: 1, 1: 1 }
-                }
+                rows: [[1, 0], [1, 0], [1, 1]]
             }
-        }
+        ]
     },
 
     SQUARE: {
         class: "tetrjs-block-square",
         no_positions: 1,
-        positions: {
-            0: {
+        positions: [
+            {
                 trans_row: 0,
                 trans_col: 0,
-                rows: {
-                    "0": { 0: 1, 1: 1 },
-                    "1": { 0: 1, 1: 1 }
-                }
+                rows: [[1, 1], [1, 1]]
             }
-        }
+        ]
     },
 
     S: {
         class: "tetrjs-block-s",
         no_positions: 2,
-        positions: {
-            0: {
+        positions: [
+            {
                 trans_row: 1,
                 trans_col: 0,
-                rows: {
-                    "0": { 0: 0, 1: 1, 2: 1 },
-                    "1": { 0: 1, 1: 1, 2: 0 }
-                }
+                rows: [[0, 1, 1], [1, 1, 0]]
             },
-            1: {
+            {
                 trans_row: -1,
                 trans_col: 0,
-                rows: {
-                    "0": { 0: 1, 1: 0 },
-                    "1": { 0: 1, 1: 1 },
-                    "2": { 0: 0, 1: 1 }
-                }
+                rows: [[1, 0], [1, 1], [0, 1]]
             }
-        }
+        ]
     },
 
     Z: {
         class: "tetrjs-block-z",
         no_positions: 2,
-        positions: {
-            0: {
+        positions: [
+            {
                 trans_row: 1,
                 trans_col: 0,
-                rows: {
-                    "0": { 0: 1, 1: 1, 2: 0 },
-                    "1": { 0: 0, 1: 1, 2: 1 }
-                }
+                rows: [[1, 1, 0], [0, 1, 1]]
             },
-            1: {
+            {
                 trans_row: -1,
                 trans_col: 0,
-                rows: {
-                    "0": { 0: 0, 1: 1 },
-                    "1": { 0: 1, 1: 1 },
-                    "2": { 0: 1, 1: 0 }
-                }
+                rows: [[0, 1], [1, 1], [1, 0]]
             }
-        }
+        ]
     },
 
     T: {
         class: "tetrjs-block-t",
         no_positions: 4,
-        positions: {
-            0: {
+        positions: [
+            {
                 trans_row: 1,
                 trans_col: -1,
-                rows: {
-                    "0": { 0: 1, 1: 1, 2: 1 },
-                    "1": { 0: 0, 1: 1, 2: 0 }
-                }
+                rows: [[1, 1, 1], [0, 1, 0]]
             },
-            1: {
+            {
                 trans_row: -1,
                 trans_col: 0,
-                rows: {
-                    "0": { 0: 0, 1: 1 },
-                    "1": { 0: 1, 1: 1 },
-                    "2": { 0: 0, 1: 1 }
-                }
+                rows: [[0, 1], [1, 1], [0, 1]]
             },
-            2: {
+            {
                 trans_row: 0,
                 trans_col: 0,
-                rows: {
-                    "0": { 0: 0, 1: 1, 2: 0 },
-                    "1": { 0: 1, 1: 1, 2: 1 }
-                }
+                rows: [[0, 1, 0], [1, 1, 1]]
             },
-            3: {
+            {
                 trans_row: 0,
                 trans_col: 1,
-                rows: {
-                    "0": { 0: 1, 1: 0 },
-                    "1": { 0: 1, 1: 1 },
-                    "2": { 0: 1, 1: 0 }
-                }
+                rows: [[1, 0], [1, 1], [1, 0]]
             }
-        }
+        ]
     }
 };
 
