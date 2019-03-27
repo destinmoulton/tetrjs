@@ -130,12 +130,12 @@ export default class Tetrjs {
         elPreviewBoard.style.height = `${boardHeight}px`;
 
         for (let i = 1; i <= preview_sections_high; i++) {
-            const top_pos = (i - 1) * SETTINGS.CELL_HEIGHT_PX;
+            const topPos = (i - 1) * SETTINGS.CELL_HEIGHT_PX;
             for (let j = 1; j <= preview_sections_wide; j++) {
-                const left_pos = (j - 1) * SETTINGS.CELL_WIDTH_PX;
+                const leftPos = (j - 1) * SETTINGS.CELL_WIDTH_PX;
                 let block = document.createElement("div");
-                block.style.top = top_pos + "px";
-                block.style.left = left_pos + "px";
+                block.style.top = topPos + "px";
+                block.style.left = leftPos + "px";
                 block.className = this.DOM_CLASSES.BOARD_BLOCK;
                 block.setAttribute("id", `tp_${j}_${i}`);
                 elPreviewBoard.appendChild(block);
@@ -202,7 +202,7 @@ export default class Tetrjs {
      * @return void
      */
     moveBlock(desiredDirection) {
-        const curr_block_no_positions =
+        const currBlockNumPositions =
             BLOCKS[this.currentBlock.type]["no_positions"];
         let currBlockPosTransRow = 0;
         let currBlockPosTransCol = 0;
@@ -211,7 +211,7 @@ export default class Tetrjs {
         // 'up' rotates the block
         if (desiredDirection == "up") {
             desiredPosition = this.currentBlock.position + 1;
-            if (desiredPosition > curr_block_no_positions - 1) {
+            if (desiredPosition > currBlockNumPositions - 1) {
                 //Reset the transition back to 0
                 desiredPosition = 0;
             }
@@ -234,37 +234,25 @@ export default class Tetrjs {
         let tmpLowestRow = SETTINGS.BOARD_ROWS_HIGH;
 
         let error = false;
-        const currBlockPositionRows =
+        const blockRows =
             BLOCKS[this.currentBlock.type]["positions"][desiredPosition][
                 "rows"
             ];
-        for (
-            let rowIndex = 0, rowKeys = Object.keys(currBlockPositionRows);
-            rowIndex < rowKeys.length;
-            rowIndex++
-        ) {
-            const row = currBlockPositionRows[rowIndex];
-            for (
-                let colIndex = 0, colKeys = Object.keys(row);
-                colIndex < colKeys.length;
-                colIndex++
-            ) {
+        for (let rowIndex = 0; rowIndex < blockRows.length; rowIndex++) {
+            const row = blockRows[rowIndex];
+            for (let colIndex = 0; colIndex < row.length; colIndex++) {
                 if (row[colIndex] === 1) {
-                    const tmpPieceColPos =
-                        this.currentBlock.col + parseInt(colIndex);
-                    const tmpPieceRowPos =
-                        this.currentBlock.row + parseInt(rowIndex);
+                    const tmpPieceColPos = this.currentBlock.col + colIndex;
+                    const tmpPieceRowPos = this.currentBlock.row + rowIndex;
 
-                    let tmpPieceDesiredCol =
-                        tmpPieceColPos + currBlockPosTransCol;
-                    let tmpPieceDesiredRow =
-                        tmpPieceRowPos + currBlockPosTransRow;
+                    let desiredCol = tmpPieceColPos + currBlockPosTransCol;
+                    let desiredRow = tmpPieceRowPos + currBlockPosTransRow;
 
-                    if (desiredDirection == "none") {
+                    if (desiredDirection === "none") {
                         if (
-                            this.board[tmpPieceDesiredRow][
-                                tmpPieceDesiredCol
-                            ].hasOwnProperty("class")
+                            this.board[desiredRow][desiredCol].hasOwnProperty(
+                                "class"
+                            )
                         ) {
                             // New piece but a space is already taken
                             this.gameOver();
@@ -272,56 +260,52 @@ export default class Tetrjs {
                     }
 
                     if (desiredDirection == "left") {
-                        tmpPieceDesiredCol = tmpPieceColPos - 1;
+                        desiredCol = tmpPieceColPos - 1;
                     }
 
                     if (desiredDirection == "right") {
-                        tmpPieceDesiredCol = tmpPieceColPos + 1;
+                        desiredCol = tmpPieceColPos + 1;
                     }
 
                     if (desiredDirection == "down") {
-                        tmpPieceDesiredRow = tmpPieceRowPos + 1;
+                        desiredRow = tmpPieceRowPos + 1;
                         if (
-                            tmpPieceDesiredRow > SETTINGS.BOARD_ROWS_HIGH ||
-                            this.board[tmpPieceDesiredRow][
-                                tmpPieceDesiredCol
-                            ].hasOwnProperty("class")
+                            desiredRow > SETTINGS.BOARD_ROWS_HIGH ||
+                            this.board[desiredRow][desiredCol].hasOwnProperty(
+                                "class"
+                            )
                         ) {
                             // Already a block in the next downward position
                             lockCurrentBlock = true;
                         }
                     }
 
-                    if (!this.board.hasOwnProperty(tmpPieceDesiredRow)) {
-                        //Can't move down, so error
-                        error = true;
-                    } else if (
-                        !this.board[tmpPieceDesiredRow].hasOwnProperty(
-                            tmpPieceDesiredCol
-                        )
+                    if (
+                        !this.board[desiredRow] ||
+                        !this.board[desiredRow][desiredCol]
                     ) {
-                        //Off the board error out
+                        //Can't move (because that board position doesn't exist)
                         error = true;
                     } else if (
-                        this.board[tmpPieceDesiredRow][
-                            tmpPieceDesiredCol
-                        ].hasOwnProperty("class")
+                        this.board[desiredRow][desiredCol].hasOwnProperty(
+                            "class"
+                        )
                     ) {
                         //Board spot already taken
                         error = true;
                     }
 
                     if (!error) {
-                        if (tmpPieceDesiredCol < tmpLowestCol) {
-                            tmpLowestCol = tmpPieceDesiredCol;
+                        if (desiredCol < tmpLowestCol) {
+                            tmpLowestCol = desiredCol;
                         }
-                        if (tmpPieceDesiredRow < tmpLowestRow) {
-                            tmpLowestRow = tmpPieceDesiredRow;
+                        if (desiredRow < tmpLowestRow) {
+                            tmpLowestRow = desiredRow;
                         }
 
                         tmpDesiredPosition.push({
-                            col: tmpPieceDesiredCol,
-                            row: tmpPieceDesiredRow
+                            col: desiredCol,
+                            row: desiredRow
                         });
                     }
                 }
@@ -382,28 +366,23 @@ export default class Tetrjs {
 
         //Loop over the board rows
         for (
-            let rowIndex = 1;
-            rowIndex <= SETTINGS.BOARD_ROWS_HIGH;
+            let rowIndex = 0;
+            rowIndex < SETTINGS.BOARD_ROWS_HIGH;
             rowIndex++
         ) {
-            const row = this.board[rowIndex.toString()];
-            let columnFullCount = 0;
+            const row = this.board[rowIndex];
+            let columnFillCount = 0;
 
             //Loop over the columns in this row
-            for (
-                let colIndex = 1, colKeys = Object.keys(row);
-                colIndex <= colKeys.length;
-                colIndex++
-            ) {
-                const col = row[colIndex];
+            for (let colIndex = 0; colIndex < row.length; colIndex++) {
                 // A class indicates the column in this row is full
-                if (col.hasOwnProperty("class")) {
-                    columnFullCount++;
+                if (row[colIndex].hasOwnProperty("class")) {
+                    columnFillCount++;
                 }
             }
 
             // The entire row is full
-            if (columnFullCount === SETTINGS.BOARD_COLS_WIDE) {
+            if (columnFillCount === SETTINGS.BOARD_COLS_WIDE) {
                 noRowsEliminated++;
 
                 //Move the upper rows down, from the bottom up
@@ -413,7 +392,7 @@ export default class Tetrjs {
                         iColIndex <= SETTINGS.BOARD_COLS_WIDE;
                         iColIndex++
                     ) {
-                        const col = row[iColIndex.toString()];
+                        const col = row[iColIndex];
                         let prevClass = "";
                         if (
                             this.board.hasOwnProperty(i - 1) &&
