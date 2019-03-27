@@ -383,7 +383,6 @@ export default class Tetrjs {
         let noRowsEliminated = 0;
 
         //Loop over the board rows
-        console.log("this.board", this.board);
         for (
             let rowIndex = 1;
             rowIndex <= SETTINGS.BOARD_ROWS_HIGH;
@@ -408,7 +407,6 @@ export default class Tetrjs {
             // The entire row is full
             if (columnFullCount === SETTINGS.BOARD_COLS_WIDE) {
                 noRowsEliminated++;
-                console.log("COLUMN IS FULL ON ROW = ", row);
 
                 //Move the upper rows down, from the bottom up
                 for (let i = rowIndex; i >= 1; i--) {
@@ -418,13 +416,13 @@ export default class Tetrjs {
                         iColIndex++
                     ) {
                         const col = row[iColIndex.toString()];
-                        let prev_class = "";
+                        let prevClass = "";
                         if (
                             this.board.hasOwnProperty(i - 1) &&
                             this.board[i - 1][iColIndex].hasOwnProperty("class")
                         ) {
                             // The class from the block directly above
-                            prev_class = this.board[i - 1][iColIndex]["class"];
+                            prevClass = this.board[i - 1][iColIndex]["class"];
                         }
 
                         const jCur = document.getElementById(
@@ -435,13 +433,10 @@ export default class Tetrjs {
                             util.removeClass(jCur, col["class"]);
                         }
 
-                        if (prev_class != "") {
+                        if (prevClass != "") {
                             //Copy down the class from above to the block in this row
-                            console.log(
-                                `copying prev_class ${prev_class} to row: ${i} col: ${iColIndex}`
-                            );
-                            util.addClass(jCur, prev_class);
-                            this.board[i][iColIndex] = { class: prev_class };
+                            util.addClass(jCur, prevClass);
+                            this.board[i][iColIndex] = { class: prevClass };
                         } else {
                             //Blank block (no block above)
                             this.board[i][iColIndex] = {};
