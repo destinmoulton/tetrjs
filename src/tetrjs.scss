@@ -11,6 +11,7 @@ $container-height: 405px;
     height: $container-height;
     border: 2px solid #757c87;
     font-family: $font-family;
+
     button {
         background: #f3f3f3;
         border: 1px #dadada solid;
@@ -22,12 +23,14 @@ $container-height: 405px;
         outline: none;
         padding: 0 5px 0 5px;
         vertical-align: middle;
+
         &:hover {
             border: 1px #c6c6c6 solid;
             box-shadow: 1px 1px 1px #eaeaea;
             color: #333333;
             background: #f7f7f7;
         }
+
         &:active {
             box-shadow: inset 1px 1px 1px #dfdfdf;
         }
@@ -93,8 +96,10 @@ $container-height: 405px;
         font-size: 12px;
         font-weight: bold;
     }
+
     .button-text {
         display: inline-block;
+
         &:first-letter {
             text-decoration: underline;
         }
@@ -105,6 +110,7 @@ $container-height: 405px;
 
 $arrow-width: 35px;
 $arrow-height: 35px;
+
 %arrow {
     position: relative;
     border: 1px solid gray;
@@ -123,19 +129,23 @@ $arrow-height: 35px;
     height: $arrow-height * 2;
     margin-left: auto;
     margin-right: auto;
+
     #up {
         @extend %arrow;
         margin-left: auto;
         margin-right: auto;
     }
+
     #left {
         @extend %arrow;
         float: left;
     }
+
     #down {
         @extend %arrow;
         float: left;
     }
+
     #right {
         @extend %arrow;
         float: left;
@@ -183,11 +193,19 @@ table#tetrjs-gameover-table>tbody>tr>td {
 
 /** The Board Style **/
 
-#tetrjs-board {
+#tetrjs-board-wrapper {
     position: absolute;
     top: 30px;
     left: 15px;
-    border: 5px solid black;
+    border: 3px solid black;
+    overflow: hidden;
+}
+
+#tetrjs-board {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    margin-top: -20px;
 }
 
 .tetrjs-board-block {
