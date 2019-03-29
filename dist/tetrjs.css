@@ -1,3 +1,10 @@
+/**
+ * tetrjs - Tetris in JavaScript.
+ * @author Destin Moulton
+ * @version v2.0.0
+ * @link https://github.com/destinmoulton/tetrjs
+ * @license MIT
+ */
 /** The Main Tetrjs Box **/
 #tetrjs-container {
   position: relative;

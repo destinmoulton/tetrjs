@@ -62,6 +62,7 @@ gulp.task("compile:sass", function() {
     return gulp
         .src("src/tetrjs.scss")
         .pipe(sass())
+        .pipe(header(banner, { pkg }))
         .pipe(gulp.dest("dist/"));
 });
 
