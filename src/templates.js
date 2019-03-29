@@ -23,7 +23,7 @@ const container = () => {
     <!-- The Game Container -->
     <div id="tetrjs-container">
         <div id="tetrjs-title-container">Tetrjs</div>
-        <div id="tetrjs-board"></div>
+        <div id="tetrjs-board-wrapper"><div id="tetrjs-board"></div></div>
         <div id="tetrjs-next-piece-preview-container"></div>
         <div id="tetrjs-score-container"></div>
         <div id="tetrjs-level-container"></div>
