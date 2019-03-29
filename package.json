@@ -2,7 +2,7 @@
     "name": "tetrjs",
     "version": "2.0.0",
     "description": "Tetris in JavaScript.",
-    "main": "tetrjs.js",
+    "main": "src/index.js",
     "scripts": {
         "compile:mustache": "gulp watch",
         "uglify": "gulp uglify-js",
