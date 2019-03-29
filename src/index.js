@@ -22,6 +22,7 @@ export default class Tetrjs {
     isPaused = false;
 
     DOM_IDS = {
+        BOARD_WRAPPER: "tetrjs-board-wrapper",
         BOARD: "tetrjs-board",
         PREVIEW_CONTAINER: "tetrjs-next-piece-preview-container",
         SCORE_CONTAINER: "tetrjs-score-container",
@@ -75,11 +76,18 @@ export default class Tetrjs {
      */
     setupBoard() {
         const elBoard = document.getElementById(this.DOM_IDS.BOARD);
+        const elWrapper = document.getElementById(this.DOM_IDS.BOARD_WRAPPER);
 
         // Clear the board
         elBoard.innerHTML = "";
         this.board = {};
 
+        // Set the wrapper size
+        const wrapperWidth = SETTINGS.BOARD_COLS_WIDE * SETTINGS.CELL_WIDTH_PX;
+        const wrapperHeight =
+            (SETTINGS.BOARD_ROWS_HIGH - 1) * SETTINGS.CELL_HEIGHT_PX;
+        elWrapper.style.width = `${wrapperWidth}px`;
+        elWrapper.style.height = `${wrapperHeight}px`;
         // Set the board size
         const boardWidth = SETTINGS.BOARD_COLS_WIDE * SETTINGS.CELL_WIDTH_PX;
         const boardHeight = SETTINGS.BOARD_ROWS_HIGH * SETTINGS.CELL_HEIGHT_PX;
