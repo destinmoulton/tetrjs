@@ -4,25 +4,11 @@ var babel = require("rollup-plugin-babel");
 var concat = require("gulp-concat");
 var declare = require("gulp-declare");
 var header = require("gulp-header");
-var hoganCompiler = require("gulp-hogan-precompile");
 var sass = require("gulp-sass");
 var sourcemaps = require("gulp-sourcemaps");
+var rename = require("gulp-rename");
 var rollup = require("gulp-better-rollup");
 var uglify = require("gulp-uglify");
-
-gulp.task("compile:templates", function() {
-    return gulp
-        .src("templates/**/*.mustache")
-        .pipe(hoganCompiler())
-        .pipe(
-            declare({
-                namespace: "templates",
-                noRedeclare: true
-            })
-        )
-        .pipe(concat("dist/tetrjs.templates.js"))
-        .pipe(gulp.dest("."));
-});
 
 gulp.task("compile:sass", function() {
     return gulp
@@ -47,21 +33,16 @@ gulp.task("compile:js", function() {
                 },
                 {
                     format: "umd",
-                    name: "Tetrjs",
-                    file: "tetrjs.js"
+                    name: "Tetrjs"
                 }
             )
         )
         .pipe(sourcemaps.write())
+        .pipe(rename("tetrjs.js"))
         .pipe(gulp.dest("dist/"));
 });
 
 gulp.task("watch", function() {
-    gulp.watch(
-        "templates/**/*.mustache",
-        { ignoreInitial: false },
-        gulp.series(["compile:templates"])
-    );
     gulp.watch(
         "src/tetrjs.scss",
         { ignoreInitial: false },
