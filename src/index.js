@@ -10,7 +10,7 @@
 import util from "./util";
 import { BLOCKS, BLOCK_TYPES } from "./blocks";
 import { SETTINGS } from "./settings";
-
+import templates from "./templates";
 /**
  * The constructor.
  * Initializes the basic configuration values.
@@ -86,15 +86,15 @@ export default class Tetrjs {
         elBoard.style.width = `${boardWidth}px`;
         elBoard.style.height = `${boardHeight}px`;
 
-        for (let i = 1; i <= SETTINGS.BOARD_ROWS_HIGH; i++) {
+        for (let i = 0; i < SETTINGS.BOARD_ROWS_HIGH; i++) {
             this.board[i] = [];
-            const top_pos = (i - 1) * SETTINGS.CELL_HEIGHT_PX;
-            for (let j = 1; j <= SETTINGS.BOARD_COLS_WIDE; j++) {
+            const top_pos = i * SETTINGS.CELL_HEIGHT_PX;
+            for (let j = 0; j < SETTINGS.BOARD_COLS_WIDE; j++) {
                 // Setup the object for storing block positions
                 this.board[i][j] = {};
 
                 // Calculate left px position of the cell
-                const left_pos = (j - 1) * SETTINGS.CELL_WIDTH_PX;
+                const left_pos = j * SETTINGS.CELL_WIDTH_PX;
 
                 // Add the block to the board
                 const block = document.createElement("div");
@@ -129,10 +129,10 @@ export default class Tetrjs {
         elPreviewBoard.style.width = `${boardWidth}px`;
         elPreviewBoard.style.height = `${boardHeight}px`;
 
-        for (let i = 1; i <= preview_sections_high; i++) {
-            const topPos = (i - 1) * SETTINGS.CELL_HEIGHT_PX;
-            for (let j = 1; j <= preview_sections_wide; j++) {
-                const leftPos = (j - 1) * SETTINGS.CELL_WIDTH_PX;
+        for (let i = 0; i < preview_sections_high; i++) {
+            const topPos = i * SETTINGS.CELL_HEIGHT_PX;
+            for (let j = 0; j < preview_sections_wide; j++) {
+                const leftPos = j * SETTINGS.CELL_WIDTH_PX;
                 let block = document.createElement("div");
                 block.style.top = topPos + "px";
                 block.style.left = leftPos + "px";
@@ -165,7 +165,7 @@ export default class Tetrjs {
         //Remove the current block from the preview
         for (let block_id of this.previewPiece.blocks) {
             const block = document.getElementById(block_id);
-            util.removeClass(block, this.previewPiece.class);
+            block.classList.remove(this.previewPiece.class);
         }
         this.previewPiece.blocks = [];
 
@@ -173,8 +173,8 @@ export default class Tetrjs {
         this.previewPiece.type = this.generateRandomBlockType();
 
         this.previewPiece.class = BLOCKS[this.previewPiece.type]["class"];
-        const startCol = 2;
-        const startRow = 2;
+        const startCol = 1;
+        const startRow = 1;
         const blockRows =
             BLOCKS[this.previewPiece.type]["positions"][0]["rows"];
 
@@ -187,8 +187,7 @@ export default class Tetrjs {
                     const blockRow = startRow + rowIndex;
                     const id = "tp_" + blockCol + "_" + blockRow;
                     const el = document.getElementById(id);
-                    util.addClass(el, this.previewPiece.class);
-
+                    el.classList.add(this.previewPiece.class);
                     this.previewPiece.blocks.push(id);
                 }
             }
@@ -202,42 +201,35 @@ export default class Tetrjs {
      * @return void
      */
     moveBlock(desiredDirection) {
-        const currBlockNumPositions =
-            BLOCKS[this.currentBlock.type]["no_positions"];
-        let currBlockPosTransRow = 0;
-        let currBlockPosTransCol = 0;
         let desiredPosition = this.currentBlock.position;
+        const blockPositions = BLOCKS[this.currentBlock.type]["positions"];
+        const blockNumPositions =
+            BLOCKS[this.currentBlock.type]["no_positions"];
+        let blockPosTransRow = 0;
+        let blockPosTransCol = 0;
 
         // 'up' rotates the block
         if (desiredDirection == "up") {
             desiredPosition = this.currentBlock.position + 1;
-            if (desiredPosition > currBlockNumPositions - 1) {
+            if (desiredPosition > blockNumPositions - 1) {
                 //Reset the transition back to 0
                 desiredPosition = 0;
             }
 
             // The amount to move the desired row and column
             // during the transformation
-            currBlockPosTransRow =
-                BLOCKS[this.currentBlock.type]["positions"][desiredPosition][
-                    "trans_row"
-                ];
-            currBlockPosTransCol =
-                BLOCKS[this.currentBlock.type]["positions"][desiredPosition][
-                    "trans_col"
-                ];
+            blockPosTransRow = blockPositions[desiredPosition]["trans_row"];
+            blockPosTransCol = blockPositions[desiredPosition]["trans_col"];
         }
 
-        let tmpDesiredPosition = [];
-        let lockCurrentBlock = false;
-        let tmpLowestCol = SETTINGS.BOARD_COLS_WIDE;
-        let tmpLowestRow = SETTINGS.BOARD_ROWS_HIGH;
+        const blockRows = blockPositions[desiredPosition]["rows"];
 
-        let error = false;
-        const blockRows =
-            BLOCKS[this.currentBlock.type]["positions"][desiredPosition][
-                "rows"
-            ];
+        let nextDesiredPosition = [];
+        let lockCurrentBlock = false;
+        let lowestCol = SETTINGS.BOARD_COLS_WIDE;
+        let lowestRow = SETTINGS.BOARD_ROWS_HIGH;
+
+        let positionIsAvailable = true;
         for (let rowIndex = 0; rowIndex < blockRows.length; rowIndex++) {
             const row = blockRows[rowIndex];
             for (let colIndex = 0; colIndex < row.length; colIndex++) {
@@ -245,8 +237,8 @@ export default class Tetrjs {
                     const tmpPieceColPos = this.currentBlock.col + colIndex;
                     const tmpPieceRowPos = this.currentBlock.row + rowIndex;
 
-                    let desiredCol = tmpPieceColPos + currBlockPosTransCol;
-                    let desiredRow = tmpPieceRowPos + currBlockPosTransRow;
+                    let desiredCol = tmpPieceColPos + blockPosTransCol;
+                    let desiredRow = tmpPieceRowPos + blockPosTransRow;
 
                     if (desiredDirection === "none") {
                         if (
@@ -259,18 +251,22 @@ export default class Tetrjs {
                         }
                     }
 
-                    if (desiredDirection == "left") {
+                    if (desiredDirection === "left") {
                         desiredCol = tmpPieceColPos - 1;
                     }
 
-                    if (desiredDirection == "right") {
+                    if (desiredDirection === "right") {
                         desiredCol = tmpPieceColPos + 1;
                     }
 
-                    if (desiredDirection == "down") {
+                    if (desiredDirection === "down") {
                         desiredRow = tmpPieceRowPos + 1;
                         if (
                             desiredRow > SETTINGS.BOARD_ROWS_HIGH ||
+                            !this.doesBoardPositionExist(
+                                desiredRow,
+                                desiredCol
+                            ) ||
                             this.board[desiredRow][desiredCol].hasOwnProperty(
                                 "class"
                             )
@@ -281,29 +277,24 @@ export default class Tetrjs {
                     }
 
                     if (
-                        !this.board[desiredRow] ||
-                        !this.board[desiredRow][desiredCol]
-                    ) {
-                        //Can't move (because that board position doesn't exist)
-                        error = true;
-                    } else if (
+                        !this.doesBoardPositionExist(desiredRow, desiredCol) ||
                         this.board[desiredRow][desiredCol].hasOwnProperty(
                             "class"
                         )
                     ) {
-                        //Board spot already taken
-                        error = true;
+                        // Can't move
+                        positionIsAvailable = false;
                     }
 
-                    if (!error) {
-                        if (desiredCol < tmpLowestCol) {
-                            tmpLowestCol = desiredCol;
+                    if (positionIsAvailable) {
+                        if (desiredCol < lowestCol) {
+                            lowestCol = desiredCol;
                         }
-                        if (desiredRow < tmpLowestRow) {
-                            tmpLowestRow = desiredRow;
+                        if (desiredRow < lowestRow) {
+                            lowestRow = desiredRow;
                         }
 
-                        tmpDesiredPosition.push({
+                        nextDesiredPosition.push({
                             col: desiredCol,
                             row: desiredRow
                         });
@@ -312,7 +303,7 @@ export default class Tetrjs {
             }
         }
 
-        if (!error) {
+        if (positionIsAvailable) {
             if (!lockCurrentBlock) {
                 // remove the current piece
                 this.removeCurrentBlockFromBoard();
@@ -323,14 +314,14 @@ export default class Tetrjs {
                 }
 
                 // Set the new current row and column
-                this.currentBlock.col = tmpLowestCol;
-                this.currentBlock.row = tmpLowestRow;
+                this.currentBlock.col = lowestCol;
+                this.currentBlock.row = lowestRow;
                 // Apply the 'movement' by modifying the block's class
-                for (let i = 0; i < tmpDesiredPosition.length; i++) {
-                    const pos = tmpDesiredPosition[i];
+                for (let i = 0; i < nextDesiredPosition.length; i++) {
+                    const pos = nextDesiredPosition[i];
                     var tmpId = `tb_${pos["col"]}_${pos["row"]}`;
                     var domBlock = document.getElementById(tmpId);
-                    util.addClass(domBlock, this.currentBlock.class);
+                    domBlock.classList.add(this.currentBlock.class);
                     this.currentBlock.blockIds.push(tmpId);
                     this.currentBlock.blockPositions.push(pos);
                 }
@@ -386,34 +377,34 @@ export default class Tetrjs {
                 noRowsEliminated++;
 
                 //Move the upper rows down, from the bottom up
-                for (let i = rowIndex; i >= 1; i--) {
+                for (let i = rowIndex; i >= 0; i--) {
                     for (
-                        let iColIndex = 1;
-                        iColIndex <= SETTINGS.BOARD_COLS_WIDE;
+                        let iColIndex = 0;
+                        iColIndex < SETTINGS.BOARD_COLS_WIDE;
                         iColIndex++
                     ) {
-                        const col = row[iColIndex];
-                        let prevClass = "";
+                        let aboveClass = "";
                         if (
-                            this.board.hasOwnProperty(i - 1) &&
+                            this.doesBoardPositionExist(i - 1, iColIndex) &&
                             this.board[i - 1][iColIndex].hasOwnProperty("class")
                         ) {
                             // The class from the block directly above
-                            prevClass = this.board[i - 1][iColIndex]["class"];
+                            aboveClass = this.board[i - 1][iColIndex]["class"];
                         }
 
-                        const jCur = document.getElementById(
+                        const el = document.getElementById(
                             `tb_${iColIndex.toString()}_${i.toString()}`
                         );
 
-                        if (col.hasOwnProperty("class")) {
-                            util.removeClass(jCur, col["class"]);
+                        const block = this.board[i][iColIndex];
+                        if (block.hasOwnProperty("class")) {
+                            el.classList.remove(block["class"]);
                         }
 
-                        if (prevClass != "") {
+                        if (aboveClass !== "") {
                             //Copy down the class from above to the block in this row
-                            util.addClass(jCur, prevClass);
-                            this.board[i][iColIndex] = { class: prevClass };
+                            el.classList.add(aboveClass);
+                            this.board[i][iColIndex] = { class: aboveClass };
                         } else {
                             //Blank block (no block above)
                             this.board[i][iColIndex] = {};
@@ -427,6 +418,16 @@ export default class Tetrjs {
             // Update the score
             this.score(noRowsEliminated);
         }
+    }
+
+    /**
+     * Return boolean whether a row and column exist in the board.
+     *
+     * @param {number} row
+     * @param {number} col
+     */
+    doesBoardPositionExist(row, col) {
+        return this.board[row] && this.board[row][col];
     }
 
     /**
@@ -498,7 +499,7 @@ export default class Tetrjs {
         //Remove the current class from the visible blocks
         for (let block_id of this.currentBlock.blockIds) {
             const block = document.getElementById(block_id);
-            util.removeClass(block, this.currentBlock.class);
+            block.classList.remove(this.currentBlock.class);
         }
 
         //Reset the current set of blocks
@@ -750,7 +751,7 @@ export default class Tetrjs {
         const elModal = document.getElementById(this.DOM_IDS.MODAL);
         const elVeil = document.getElementById(this.DOM_IDS.MODAL_VEIL);
 
-        const html = templates[template_name].render(vars);
+        const html = templates[template_name](vars);
 
         elModal.innerHTML = html;
 
@@ -793,7 +794,7 @@ export default class Tetrjs {
      */
     run(containerID) {
         const el = document.getElementById(containerID);
-        el.innerHTML = templates["container"].render();
+        el.innerHTML = templates["container"]();
 
         const button = document.getElementById("tetrjs-button-pause");
         button.addEventListener("click", e => {
