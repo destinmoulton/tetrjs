@@ -6,18 +6,6 @@ Tetrjs is a JavaScript implementation of the classic Russian tile matching game.
 
 Tetrjs should work in most modern browsers. I have not tested Internet Explorer, but IE8+ should work fine (guessing).
 
-#### Requirements
-
----
-
-Tetrjs has a few requirements:
-
--   Twitter Bootstrap > 3.3.5 (just the css)
--   jQuery
--   hogan.js
-
-Note: Tetrjs works fine without Bootstrap. The icons and buttons are a little drab without it.
-
 ### Embedding Tetrjs in Your Website
 
 ---
@@ -26,38 +14,25 @@ First, clone the repository into a directory.
 
 `$ git clone https://github.com/destinmoulton/tetrjs`
 
-CSS -- Put this in the header
+Add the CSS to your html file:
 
 ```html
-<!-- Bootstrap for Better Buttons and Icons -->
-<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
 <!-- Tetrjs CSS -->
-<link rel="stylesheet" type="text/css" href="tetrjs.css">
+<link rel="stylesheet" type="text/css" href="tetrjs.css" />
 ```
 
-JS -- Either in the header or after the content
+Add the JavaScript:
 
 ```html
-<!-- Required Javascript Libraries -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-<script src="https://twitter.github.com/hogan.js/builds/3.0.1/hogan-3.0.1.js"></script>
-
-<!-- The Tetrjs Block Definitions -->
-<script src="tetrjs.blocks.js"></script>
-
-<!-- The Tetrjs Pre-compiled Mustache Templates -->
-<script src="tetrjs.templates.js"></script>
-
 <!-- The Tetrjs Game Logic -->
-<script src="tetrjs.js"></script>
+<script src="tetrjs.min.js"></script>
 
 <script>
-    $(function(){
+    $(function() {
         // Create an instance of Tetrjs
         var tetrjs = new Tetrjs();
         // Run Tetrjs
-        tetrjs.run('tetrjs-wrapper');
+        tetrjs.run("tetrjs-wrapper");
     });
 </script>
 ```
@@ -71,19 +46,19 @@ HTML Container
 
 Note: You can change the name 'tetrjs-wrapper' to whatever you prefer. Just remember to change it in both locations (HTML and JS).
 
-#### HTML Templates
+#### Dev Notes
 
----
+To compile the css and tetrjs.dev.js while developing:
 
-The HTML for Tetrjs is loaded via mustache templates. The templates are stored in the 'templates' directory.
+```sh
+$ gulp watch
+```
 
-The templates are pre-compiled into the file tetrjs.templates.js.
+To build the minified distribution:
 
-The templates are compiled using [gulp-hogan-precompile](https://github.com/eneko89/gulp-hogan-precompile).
-
-The gulpfile contains a gulp 'compile-templates' and 'watch'.
-
-Running `$ npm run compile:mustache` will start the compiler in watch mode.
+```sh
+$ gulp build
+```
 
 #### License
 
