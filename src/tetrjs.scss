@@ -1,4 +1,6 @@
-$font-family: Verdana, Arial, sans-serif;
+$font-family: Verdana,
+Arial,
+sans-serif;
 $container-width: 375px;
 $container-height: 405px;
 /** The Main Tetrjs Box **/
@@ -137,11 +139,11 @@ table#tetrjs-gameover-table {
     text-align: left;
 }
 
-table#tetrjs-gameover-table > tbody > tr {
-    border: 1px solid black;
+table#tetrjs-gameover-table>tbody>tr {
+    border: 0;
 }
 
-table#tetrjs-gameover-table > tbody > tr > td {
+table#tetrjs-gameover-table>tbody>tr>td {
     padding: 2px;
 }
 
