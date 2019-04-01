@@ -80,16 +80,6 @@ const intro = () => {
 
     <br /><br />
     Arrow keys control the pieces.
-    <br />
-    &nbsp;
-
-    <div id="tetrjs-arrows-container">
-        <div id="up">⬆</div>
-        <br />
-        <div id="left">⬅</div>
-        <div id="down">⬇</div>
-        <div id="right">➡</div>
-    </div>
 `;
 };
 
