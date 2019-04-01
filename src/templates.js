@@ -30,7 +30,6 @@ const container = () => {
         <div id="tetrjs-actions-container">
             <br />
             <button id="tetrjs-button-pause">
-                <div class="icon">&#9613;&#9613;</div>
                 <div class="button-text">Pause</div>
             </button>
             <br />
