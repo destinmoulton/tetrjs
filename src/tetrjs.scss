@@ -106,52 +106,6 @@ $container-height: 405px;
     }
 }
 
-/** Keyboard Arrow Box **/
-
-$arrow-width: 35px;
-$arrow-height: 35px;
-
-%arrow {
-    position: relative;
-    border: 1px solid gray;
-    border-radius: 3px;
-    height: $arrow-height;
-    width: $arrow-width;
-    font-size: 18px;
-    text-align: center;
-}
-
-/** Keyboard Arrow Styles **/
-
-#tetrjs-arrows-container {
-    bottom: 10px;
-    width: $arrow-width * 3 + 6;
-    height: $arrow-height * 2;
-    margin-left: auto;
-    margin-right: auto;
-
-    #up {
-        @extend %arrow;
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    #left {
-        @extend %arrow;
-        float: left;
-    }
-
-    #down {
-        @extend %arrow;
-        float: left;
-    }
-
-    #right {
-        @extend %arrow;
-        float: left;
-    }
-}
-
 /** The Modal Popover Style **/
 
 #tetrjs-modal {
@@ -192,9 +146,15 @@ table#tetrjs-gameover-table>tbody>tr>td {
 }
 
 /** The Board Style **/
+$board-border-width: 2px;
+$board-width: 200px;
+$board-height: 340px;
 
 #tetrjs-board-wrapper {
     position: absolute;
+    box-sizing: border-box;
+    width: $board-width + $board-border-width * 2;
+    height: $board-height + $board-border-width * 2;
     top: 30px;
     left: 15px;
     border: 3px solid black;
@@ -203,6 +163,7 @@ table#tetrjs-gameover-table>tbody>tr>td {
 
 #tetrjs-board {
     position: absolute;
+    width: $board-width;
     top: 0px;
     left: 0px;
     margin-top: -20px;
@@ -220,8 +181,9 @@ table#tetrjs-gameover-table>tbody>tr>td {
     -webkit-box-shadow: inset -1px -1px 4px 1px rgba(0, 0, 0, 1);
     -moz-box-shadow: inset -1px -1px 4px 1px rgba(0, 0, 0, 1);
     box-shadow: inset -1px -1px 4px 1px rgba(0, 0, 0, 1);
-    border-top: 1px solid black;
-    border-left: 1px solid black;
+    border-top: 1px solid rgba(0, 0, 0, 0.68);
+    border-left: 1px solid rgba(0, 0, 0, 0.68);
+    box-sizing: border-box;
 }
 
 .tetrjs-block-straight {
